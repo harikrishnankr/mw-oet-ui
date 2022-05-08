@@ -1,0 +1,297 @@
+@import "./mixins";
+@import "./variables";
+
+$utl: (
+  display: (
+    class: d,
+    values: inline inline-block block grid table table-row table-cell flex
+      inline-flex none,
+  ),
+  position: (
+    class: position,
+    values: relative static fixed absolute,
+  ),
+  vertical-align: (
+    class: align,
+    values: baseline top middle bottom text-bottom text-top,
+  ),
+  overflow: (
+    class: overflow,
+    values: auto hidden visible scroll,
+  ),
+  width: (
+    class: w,
+    values: (
+      25: 25%,
+      50: 50%,
+      75: 75%,
+      100: 100%
+    )
+  ),
+  height: (
+    class: h,
+    values: (
+      25: 25%,
+      50: 50%,
+      75: 75%,
+      100: 100%
+    )
+  ),
+  padding: (
+    class: p,
+    values: (
+      1: 1rem,
+      2: 2rem,
+      3: 3rem,
+      4: 4rem,
+      5: 5rem,
+    ),
+  ),
+  padding-left: (
+    class: pl,
+    values: (
+      1: 1rem,
+      2: 2rem,
+      3: 3rem,
+      4: 4rem,
+      5: 5rem,
+    ),
+  ),
+  padding-right: (
+    class: pr,
+    values: (
+      1: 1rem,
+      2: 2rem,
+      3: 3rem,
+      4: 4rem,
+      5: 5rem,
+    ),
+  ),
+  padding-top: (
+    class: pt,
+    values: (
+      1: 1rem,
+      2: 2rem,
+      3: 3rem,
+      4: 4rem,
+      5: 5rem,
+    ),
+  ),
+  padding-bottom: (
+    class: pb,
+    values: (
+      1: 1rem,
+      2: 2rem,
+      3: 3rem,
+      4: 4rem,
+      5: 5rem,
+    ),
+  ),
+  margin: (
+    class: m,
+    values: (
+      1: 1rem,
+      2: 2rem,
+      3: 3rem,
+      4: 4rem,
+      5: 5rem,
+    ),
+  ),
+  margin-left: (
+    class: ml,
+    values: (
+      1: 1rem,
+      2: 2rem,
+      3: 3rem,
+      4: 4rem,
+      5: 5rem,
+    ),
+  ),
+  margin-right: (
+    class: mr,
+    values: (
+      1: 1rem,
+      2: 2rem,
+      3: 3rem,
+      4: 4rem,
+      5: 5rem,
+    ),
+  ),
+  margin-top: (
+    class: mt,
+    values: (
+      1: 1rem,
+      2: 2rem,
+      3: 3rem,
+      4: 4rem,
+      5: 5rem,
+    ),
+  ),
+  margin-bottom: (
+    class: mb,
+    values: (
+      1: 1rem,
+      2: 2rem,
+      3: 3rem,
+      4: 4rem,
+      5: 5rem,
+    ),
+  ),
+  flex: (
+    class: flex,
+    values: (
+      fill: 1 1 auto,
+    ),
+  ),
+  flex-direction: (
+    class: flex,
+    values: row column row-reverse column-reverse,
+  ),
+  flex-grow: (
+    class: flex,
+    values: (
+      grow-0: 0,
+      grow-1: 1,
+    ),
+  ),
+  flex-shrink: (
+    class: flex,
+    values: (
+      shrink-0: 0,
+      shrink-1: 1,
+    ),
+  ),
+  flex-wrap: (
+    class: flex,
+    values: wrap nowrap wrap-reverse,
+  ),
+  justify-content: (
+    class: justify-content,
+    values: (
+      start: flex-start,
+      end: flex-end,
+      center: center,
+      between: space-between,
+      around: space-around,
+      evenly: space-evenly,
+    ),
+  ),
+  align-items: (
+    class: align-items,
+    values: (
+      start: flex-start,
+      end: flex-end,
+      center: center,
+      baseline: baseline,
+      stretch: stretch,
+    ),
+  ),
+  align-content: (
+    class: align-content,
+    values: (
+      start: flex-start,
+      end: flex-end,
+      center: center,
+      between: space-between,
+      around: space-around,
+      stretch: stretch,
+    ),
+  ),
+  align-self: (
+    class: align-self,
+    values: (
+      auto: auto,
+      start: flex-start,
+      end: flex-end,
+      center: center,
+      baseline: baseline,
+      stretch: stretch,
+    ),
+  ),
+  text-align: (
+    class: text-align,
+    values: (
+      left: left,
+      right: right,
+      center: center,
+    ),
+  ),
+  text-decoration: (
+    class: text-decoration,
+    values: none underline line-through,
+  ),
+  text-transform: (
+    class: text-transform,
+    values: lowercase uppercase capitalize,
+  ),
+  white-space: (
+    class: white-space,
+    values: (
+      normal: normal,
+      nowrap: nowrap,
+    ),
+  ),
+  word-wrap: (
+    class: word-wrap,
+    values: (
+      break: break-word,
+    ),
+  ),
+  word-break: (
+    class: word-break,
+    values: (
+      break: break-word,
+    ),
+  ),
+  color: (
+    class: text,
+    values: (
+      primary: $primary-color,
+      secondary: $secondary-color,
+      white-color: $white-color,
+      black-color: $black-color,
+      wolf-grey: $wolf-grey,
+      ui-gray: $ui-gray,
+      river-stone: $river-stone,
+      primary-color-hover: $primary-color-hover,
+      primary-color-selected: $primary-color-selected,
+      success-color: $success-color,
+      success-color-hover: $success-color-hover,
+      success-color-selected: $success-color-selected,
+      danger-color: $danger-color,
+      danger-color-hover: $danger-color-hover,
+      danger-color-selected: $danger-color-selected
+    ),
+  ),
+  background-color: (
+    class: background,
+    values: (
+      primary: $primary-color,
+      secondary: $secondary-color,
+      white-color: $white-color,
+      black-color: $black-color,
+      wolf-grey: $wolf-grey,
+      ui-gray: $ui-gray,
+      river-stone: $river-stone,
+      primary-color-hover: $primary-color-hover,
+      primary-color-selected: $primary-color-selected,
+      success-color: $success-color,
+      success-color-hover: $success-color-hover,
+      success-color-selected: $success-color-selected,
+      danger-color: $danger-color,
+      danger-color-hover: $danger-color-hover,
+      danger-color-selected: $danger-color-selected
+    ),
+  ),
+  opacity: (
+    class: opacity,
+    values: (
+      25: 0.25,
+      50: 0.5,
+      75: 0.75,
+      100: 1,
+    ),
+  )
+);
+
+@include build-simple-utilities($utl);

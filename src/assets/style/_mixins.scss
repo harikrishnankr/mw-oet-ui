@@ -1,0 +1,22 @@
+@mixin build-utility-class($prefix, $suffix, $attribute, $value) {
+    .#{$prefix}-#{$suffix} {
+        #{$attribute}: $value;
+    }
+}
+
+@mixin build-simple-utilities($utility-map) {
+    @each $attribute, $properties in $utility-map {
+        $class: map-get($properties, class);
+        $values: map-get($properties, values);
+        @if type-of($values) == "map" {
+            @each $suffix, $value in $values {
+                @include build-utility-class($class, $suffix, $attribute, $value);
+            }
+        }
+        @else {
+            @each $value in $values {
+                @include build-utility-class($class, $value, $attribute, $value);
+            }
+        }
+    }
+}

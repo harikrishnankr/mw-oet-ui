@@ -1,24 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { lazy } from 'react';
+import { Route, Routes } from "react-router";
+import { Loading } from './core/loading';
+
+const HomeAsync = lazy(() => import("./pages/home"));
+const AdminLoginAsync = lazy(() => import("./pages/auth/AdminLogin"));
+const StudentLoginAsync = lazy(() => import("./pages/auth/StudentLogin"));
+const NotFoundAsync = lazy(() => import("./pages/notFound"));
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+          <Route path="/" element={ <Loading> <HomeAsync /> </Loading> }/>
+          <Route path="/admin/login" element={ <Loading> <AdminLoginAsync /> </Loading> }/>
+          <Route path="/student/login" element={ <Loading> <StudentLoginAsync /> </Loading> }/>
+          <Route
+              path="*"
+              element={<Loading> <NotFoundAsync /> </Loading> }
+          />
+      </Routes>
     </div>
   );
 }
