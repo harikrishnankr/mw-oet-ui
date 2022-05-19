@@ -1,0 +1,94 @@
+#contact-us {
+    .section-title {
+        font-size: 35px;
+        margin-bottom: 25px;
+        font-weight: 600;
+        line-height: 30px;
+    }
+
+    .contact-us-vector {
+        display: flex;
+        justify-content: center;
+    }
+
+    img {
+        @media (min-width: 320px) and (max-width: 480px) {
+            max-width: 320px;
+        }
+
+        @media (min-width: 480px) and (max-width: 991px) {
+            max-width: 450px;
+        }
+    }
+
+    #contactForm {
+        margin-top: 30px;
+
+        @media (min-width: 320px) and (max-width: 991px) {
+            margin-top: 0px;
+        }
+    }
+
+    form#contactForm input[type="text"],
+    form#contactForm input[type="email"],
+    form#contactForm select {
+        min-height: 52px;
+        padding: 0px 0 0 28px;
+        font-size: 16px;
+        color: #5e629c;
+        -webkit-appearance: button;
+    }
+
+    form#contactForm .form-control:focus {
+        border: 1px solid #3ecf8e;
+        outline: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        background: #e5fff3;
+    }
+
+    .list-unstyled li {
+        color: #d9534f;
+    }
+
+    .submit-button {
+        button {
+            background-color: #3ecf8e;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0px 8px 9px 0px rgb(96 94 94 / 17%);
+            -moz-box-shadow: 0px 8px 9px 0px rgba(96, 94, 94, 0.17);
+            -webkit-box-shadow: 0px 8px 9px 0px rgb(96 94 94 / 17%);
+            -o-box-shadow: 0px 8px 9px 0px rgba(96, 94, 94, 0.17);
+            -ms-box-shadow: 0px 8px 9px 0px rgba(96, 94, 94, 0.17);
+            width: 160px;
+            height: 50px;
+            padding: 14px 15px;
+            font-size: 14px;
+            border-radius: 4px;
+            font-family: 'Rubik', sans-serif;
+            letter-spacing: 1px;
+            font-weight: 500;
+            color: #fff;
+            border: none;
+            text-transform: uppercase;
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            user-select: none;
+            line-height: 1.5;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -webkit-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            -ms-transition: all 0.3s ease-in-out;
+
+            &:hover {
+                color: #fff;
+                -webkit-transform: translateY(-2px);
+                transform: translateY(-2px);
+            }
+        }
+    }
+}

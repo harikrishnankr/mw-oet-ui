@@ -1,0 +1,148 @@
+#courses {
+    .courses-vector {
+        display: flex;
+        justify-content: center;
+        img {
+            max-width: 450px !important;
+
+            @media (min-width: 320px) and (max-width: 480px) {
+                max-width: 300px !important;
+            }
+
+            @media (max-width: 991px) {
+                margin-bottom: 25px;
+            }
+        }
+    }
+
+    .courses-info {
+        p {
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+    }
+
+    .oet-header {
+        font-size: 14px;
+    }
+
+    .section-title {
+        font-size: 35px;
+        margin-bottom: 30px;
+        font-weight: 600;
+        line-height: 30px;
+    }
+
+    .whatapp-btn {
+        border: 1px solid #3ecf8e;
+        color: #3ecf8e !important;
+        box-shadow: 0px 8px 9px 0px rgb(96 94 94 / 17%);
+        -moz-box-shadow: 0px 8px 9px 0px rgba(96, 94, 94, 0.17);
+        -webkit-box-shadow: 0px 8px 9px 0px rgb(96 94 94 / 17%);
+        -o-box-shadow: 0px 8px 9px 0px rgba(96, 94, 94, 0.17);
+        -ms-box-shadow: 0px 8px 9px 0px rgba(96, 94, 94, 0.17);
+        width: 180px;
+        height: 50px;
+        padding: 15px;
+        background: #fff;
+        text-transform: uppercase;
+        cursor: pointer;
+        font-size: 14px;
+        border-radius: 4px;
+        font-family: rubik, sans-serif;
+        letter-spacing: 1px;
+        font-weight: 500;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        line-height: 1.5;
+        text-decoration: none;
+        margin-right: 20px;
+        transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        -webkit-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        -ms-transition: all 0.3s ease-in-out;
+        display: inline-block;
+
+        img {
+            width: 26px;
+            margin-top: -3px;
+
+            @media (min-width: 320px) and (max-width: 480px) {
+                margin-top: -6px;
+            }
+        }
+
+        &:hover {
+            -webkit-transform: translateY(-2px);
+            transform: translateY(-2px);
+            text-decoration: none;
+            outline: none;
+        }
+
+        @media (min-width: 320px) and (max-width: 480px) {
+            width: 135px;
+            height: 45px;
+            padding: 15px 14px;
+            font-size: 12px;
+        }
+    }
+
+    .register-btn {
+        background-color: #3ecf8e;
+        position: relative;
+        z-index: 1;
+        box-shadow: 0px 8px 9px 0px rgb(96 94 94 / 17%);
+        -moz-box-shadow: 0px 8px 9px 0px rgba(96, 94, 94, 0.17);
+        -webkit-box-shadow: 0px 8px 9px 0px rgb(96 94 94 / 17%);
+        -o-box-shadow: 0px 8px 9px 0px rgba(96, 94, 94, 0.17);
+        -ms-box-shadow: 0px 8px 9px 0px rgba(96, 94, 94, 0.17);
+        width: 160px;
+        height: 50px;
+        padding: 14px 15px;
+        font-size: 14px;
+        border-radius: 4px;
+        font-family: 'Rubik', sans-serif;
+        letter-spacing: 1px;
+        font-weight: 500;
+        color: #fff;
+        border: none;
+        text-transform: uppercase;
+        transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        -webkit-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        -ms-transition: all 0.3s ease-in-out;
+        display: inline-block;
+        text-align: center;
+        vertical-align: middle;
+        user-select: none;
+        line-height: 1.5;
+        text-decoration: none;
+        margin-right: 20px;
+
+        &:hover {
+            color: #fff;
+            -webkit-transform: translateY(-2px);
+            transform: translateY(-2px);
+            text-decoration: none;
+            outline: none;
+        }
+
+        @media (min-width: 320px) and (max-width: 480px) {
+            width: 135px;
+            height: 45px;
+            padding: 15px 14px;
+            font-size: 12px;
+        }
+    }
+
+    .course-details {
+        color: #5e629c;
+
+        h1, h2, h3, h4, h5 {
+            color: #151948;
+        }
+    }
+}
