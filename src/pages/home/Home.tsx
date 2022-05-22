@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import AboutUs from "./AboutUs";
 import ContactUs from "./ContactUs";
 import Footer from "./Footer";
@@ -9,11 +9,11 @@ export function Home() {
 
     const [isStickyHeader, setIsStickyHeader] = useState(false);
     const [selectedId, setSelectedId] = useState("#home");
-    const linkIds = ['#home', '#courses', '#about-us', '#contact-us'];
+    const linkIds = useMemo(() => ['#home', '#courses', '#about-us', '#contact-us'], []);
     
     useEffect(() => {
         const handleScroll = (event: any) => {
-            let scrollTop = event.srcElement.scrollTop, itemTranslate = Math.min(0, scrollTop/3 - 60);
+            let scrollTop = event.srcElement.scrollTop;
             if (scrollTop > 75) {
                 setIsStickyHeader(true);
             } else {
@@ -32,7 +32,7 @@ export function Home() {
         return () => {
             window.removeEventListener('scroll', handleScroll, true)
         };
-    }, []);
+    }, [linkIds]);
 
     return (
         <>

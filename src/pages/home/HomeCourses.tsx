@@ -1,8 +1,18 @@
 import "./style/homeCourses.scss"
 import coursePlaceholder from "../../assets/images/courses.png";
 import whatsApp from "../../assets/images/whatsapp.svg";
+import { useNavigate } from "react-router";
+import { SyntheticEvent } from "react";
 
 export default function HomeCourses() {
+
+    const navigation = useNavigate();
+
+    const goToRegister = (e: SyntheticEvent) => {
+        e.preventDefault();
+        navigation("/student/register");
+    };
+
     return (
         <section id="courses" className="section">
             <div className="container">
@@ -55,9 +65,9 @@ export default function HomeCourses() {
                                     </li>
                                 </ul>
                             </div>
-                            <a className="register-btn" href="#">Register</a>
-                            <a className="whatapp-btn" href="https://wa.me/916235462408?text=Hai,%20I%20would%20like%20to%20know%20more%20about%20joining%20in%20Manglish%20World" target="_blank">
-                                <img src={whatsApp} className="whatsapp-icon"/> Whatsapp
+                            <a className="register-btn" onClick={goToRegister} href="/#/">Register</a>
+                            <a className="whatapp-btn" href="https://wa.me/916235462408?text=Hai,%20I%20would%20like%20to%20know%20more%20about%20joining%20in%20Manglish%20World" target="_blank" rel="noopener noreferrer">
+                                <img src={whatsApp} className="whatsapp-icon" alt="Whatsapp" /> Whatsapp
                             </a>
                         </div>
                     </div>
