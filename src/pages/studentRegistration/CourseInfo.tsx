@@ -3,8 +3,10 @@ import {
     Input,
     Button,
     Radio,
-    Space
+    Space,
+    RadioChangeEvent
 } from 'antd';
+import { useState } from 'react';
 
 export interface ICourseInfo {
     currentStatus?: string;
@@ -17,10 +19,14 @@ export interface ICourseInfo {
 
 export function CourseInfo({ formData, onSubmit, previous }: { formData: ICourseInfo, onSubmit: (t: any) => any, previous: (t: any) => any }) {
     const [form] = Form.useForm();
+    const [currentStatus, setCurrentStatus] = useState<string|null>(formData.currentStatus || null);
 
     const onFinish = (values: any) => {
-        console.log('Received values of form: ', values);
         onSubmit(values);
+    };
+
+    const onStatusChange = (e: RadioChangeEvent) => {
+        setCurrentStatus(e.target.value)
     };
 
     return (
@@ -36,18 +42,30 @@ export function CourseInfo({ formData, onSubmit, previous }: { formData: ICourse
                 <div className="row">
                     <div className="col-md-4">
                         <Form.Item name="currentStatus" label="Current Status" rules={[{ required: true, message: 'Please enter the Job Status!' }]}>
-                            <Radio.Group>
+                            <Radio.Group onChange={onStatusChange}>
                                 <Space direction="vertical">
-                                    <Radio value="fullTime">
+                                    <Radio value="Working Full-time">
                                         Working Full-time
-                                        {<Input style={{ width: 100, marginLeft: 10 }} />}
+                                        {
+                                            currentStatus === "Working Full-time" ?
+                                                <Form.Item label="Job" name="job" rules={[{ required: true, message: 'Please enter the Please enter job!' }]}>
+                                                    <Input style={{ width: 100, marginLeft: 10 }} />
+                                                </Form.Item>:
+                                                null
+                                        }
                                     </Radio>
-                                    <Radio value="partTime">
+                                    <Radio value="Working Part-time">
                                         Working Part-time
-                                        {<Input style={{ width: 100, marginLeft: 10 }} />}
+                                        {
+                                            currentStatus === "Working Part-time" ?
+                                                <Form.Item label="Job" name="job" rules={[{ required: true, message: 'Please enter the Please enter job!' }]}>
+                                                    <Input style={{ width: 100, marginLeft: 10 }} />
+                                                </Form.Item> :
+                                                null
+                                        }
                                     </Radio>
-                                    <Radio value="student">Student</Radio>
-                                    <Radio value="jobSeeker">Job Seeker</Radio>
+                                    <Radio value="Student">Student</Radio>
+                                    <Radio value="Job Seeker">Job Seeker</Radio>
                                 </Space>
                             </Radio.Group>
                         </Form.Item>
@@ -56,9 +74,9 @@ export function CourseInfo({ formData, onSubmit, previous }: { formData: ICourse
                         <Form.Item name="purpose" label="Purpose Of Writing OET" rules={[{ required: true, message: 'Please enter the Purpose!' }]}>
                             <Radio.Group>
                                 <Space direction="vertical">
-                                    <Radio value="studyAbroad">Study Abroad - ACADEMICS</Radio>
-                                    <Radio value="prForCaAuNz">PR for Canada/ Australia/ New Zealand - GENERAL</Radio>
-                                    <Radio value="workVisa">Work Visa for NURSES - ACADEMICS (The UK/ Australia/ New Zealand/ Ireland/ Malta/ Germany)*</Radio>
+                                    <Radio value="Study Abroad">Study Abroad - ACADEMICS</Radio>
+                                    <Radio value="PR for Canada/ Australia/ New Zealand">PR for Canada/ Australia/ New Zealand - GENERAL</Radio>
+                                    <Radio value="Work Visa for NURSES (The UK/ Australia/ New Zealand/ Ireland/ Malta/ Germany)*">Work Visa for NURSES - ACADEMICS (The UK/ Australia/ New Zealand/ Ireland/ Malta/ Germany)*</Radio>
                                 </Space>
                             </Radio.Group>
                         </Form.Item>
@@ -67,9 +85,8 @@ export function CourseInfo({ formData, onSubmit, previous }: { formData: ICourse
                         <Form.Item name="courseType" label="Course Type" rules={[{ required: true, message: 'Please enter the Course Type!' }]}>
                             <Radio.Group>
                                 <Space direction="vertical">
-                                    <Radio value="studyAbroad">Study Abroad - ACADEMICS</Radio>
-                                    <Radio value="prForCaAuNz">PR for Canada/ Australia/ New Zealand - GENERAL</Radio>
-                                    <Radio value="workVisa">Work Visa for NURSES - ACADEMICS (The UK/ Australia/ New Zealand/ Ireland/ Malta/ Germany)*</Radio>
+                                    <Radio value="OET Regular">OET Regular</Radio>
+                                    <Radio value="OET Speaking Only">OET Speaking Only</Radio>
                                 </Space>
                             </Radio.Group>
                         </Form.Item>
@@ -78,9 +95,9 @@ export function CourseInfo({ formData, onSubmit, previous }: { formData: ICourse
                         <Form.Item name="internetConnection" label="Which internet connection are you using?" rules={[{ required: true, message: 'Please enter the Connection Type!' }]}>
                             <Radio.Group>
                                 <Space direction="vertical">
-                                    <Radio value="studyAbroad">Study Abroad - ACADEMICS</Radio>
-                                    <Radio value="prForCaAuNz">PR for Canada/ Australia/ New Zealand - GENERAL</Radio>
-                                    <Radio value="workVisa">Work Visa for NURSES - ACADEMICS (The UK/ Australia/ New Zealand/ Ireland/ Malta/ Germany)*</Radio>
+                                    <Radio value="Mobile Data">Mobile Data</Radio>
+                                    <Radio value="Standard Broadband Connection">Standard Broadband Connection</Radio>
+                                    <Radio value="Broadband Optical Fiber connection">Broadband Optical Fiber connection</Radio>
                                 </Space>
                             </Radio.Group>
                         </Form.Item>
@@ -89,11 +106,11 @@ export function CourseInfo({ formData, onSubmit, previous }: { formData: ICourse
                         <Form.Item name="englishRating" label="How would you rate your English speaking skills out of 5?" rules={[{ required: true, message: 'Please enter the your Rating!' }]}>
                             <Radio.Group>
                                 <Space direction="vertical">
-                                    <Radio value="5">5 - Very advanced</Radio>
-                                    <Radio value="4">4 - Advanced</Radio>
-                                    <Radio value="3">3 - Average</Radio>
-                                    <Radio value="2">2 - Below average</Radio>
-                                    <Radio value="1">1 - Beginner</Radio>
+                                    <Radio value="Very advanced">5 - Very advanced</Radio>
+                                    <Radio value="Advanced">4 - Advanced</Radio>
+                                    <Radio value="Average">3 - Average</Radio>
+                                    <Radio value="Below average">2 - Below average</Radio>
+                                    <Radio value="Beginner">1 - Beginner</Radio>
                                 </Space>
                             </Radio.Group>
                         </Form.Item>

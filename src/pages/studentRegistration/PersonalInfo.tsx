@@ -17,7 +17,7 @@ export interface IPersonalInfo {
     phone?: string;
     gender?: string;
     dob?: string;
-    hometownAddress?: string;
+    address?: string;
     pinCode?: string;
     prefix?: string;
     idProof?: any;
@@ -42,12 +42,10 @@ export function PersonalInfo({ formData, onSubmit }: { formData: IPersonalInfo, 
     const [form] = Form.useForm();
 
     const onFinish = (values: any) => {
-        console.log(values);
         onSubmit && onSubmit(values);
     };
 
     const normFile = (e: any) => {
-        console.log('Upload event:', e);
         if (Array.isArray(e)) {
           return e;
         }
@@ -143,7 +141,7 @@ export function PersonalInfo({ formData, onSubmit }: { formData: IPersonalInfo, 
                     </div>
                     <div className="col-md-4">
                         <Form.Item
-                            name="hometownAddress"
+                            name="address"
                             label="Hometown Address"
                             rules={[{ required: true, message: 'Please enter you Address' }]}
                         >

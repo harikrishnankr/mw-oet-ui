@@ -1,12 +1,15 @@
-import { Steps } from "antd";
-import React, { useState } from "react";
+import { message, Modal, Steps } from "antd";
+import React, { useEffect, useState } from "react";
+import { postRequest } from "../../core/apiService";
 import HeaderLight from "../../core/headerLight";
 import { isMobileDevice } from "../../core/utils";
 import { Assessment } from "./Assessment";
 import { CourseInfo, ICourseInfo } from "./CourseInfo";
 import { IPersonalInfo, PersonalInfo } from "./PersonalInfo";
+import questionList from "../../core/constants/questions";
 
 import "./studentRegistration.scss";
+import { useNavigate } from "react-router";
 
 enum FormStatus {
     Success = 1,
@@ -29,7 +32,7 @@ interface RegistrationFormStatus {
 const { Step } = Steps;
 const DEFAULT_FORM = {
     personalInfo: {
-        prefix: '+91'
+        prefix: "+91"
     },
     courseInfo: {},
     assessment: {}
@@ -47,6 +50,7 @@ export function RegistrationWrapper() {
     const [formData, setFormData] = useState<RegistrationForm>({ ...DEFAULT_FORM });
     const [formStatus, setFormStatus] = useState<RegistrationFormStatus>({ ...DEFAULT_FORM_STATUS });
     const isMobile: boolean = isMobileDevice();
+    const navigation = useNavigate();
 
     const onChange = (s: number) => {
         setStep(s);
@@ -62,15 +66,58 @@ export function RegistrationWrapper() {
         }
     };
 
+    const registerApi = () => {
+        const data = { ...formData.personalInfo, ...formData.courseInfo };
+        const payload = new FormData();
+        const questions: { type: string; question: any; answer: any; }[] = [];
+        Object.keys(data).forEach((name: string) => {
+            if ( name === "dob") {
+                payload.append(name, data[name as keyof typeof data].format());
+            } else if ( name === "idProof" ) {
+                payload.append(name, data[name as keyof typeof data][0].originFileObj);
+            } else if ( name === "phone" ) {
+                payload.append(name, `${data.prefix}-${data[name as keyof typeof data]}`);
+            } else if ( name !== "prefix" ) {
+                payload.append(name, data[name as keyof typeof data]);
+            }
+        });
+        Object.keys(formData.assessment).forEach((name: string) => {
+            const [type, index] = name.split("_");
+            questions.push({
+                type,
+                question: (questionList as any)[type][+index - 1].question,
+                answer: formData.assessment[name]
+            });
+        });
+        payload.append("questions", JSON.stringify(questions));
+
+        postRequest("http://localhost:3001/student/booking", payload).then((res: any) => {
+            Modal.success({
+                content: res.message,
+            });
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+            navigation("/");
+        }).catch((err) => {
+            Modal.error({
+                title: "Error!",
+                content: err?.message,
+            });
+        });
+    };
+
+    useEffect(() => {
+        if (formStatus.assessment === FormStatus.Success) {
+            registerApi();
+        }
+    }, [formStatus, formStatus?.assessment]);
+
     const onPersonalInfoSubmit = (value: IPersonalInfo) => {
         setFormData((f) => ({
             ...f,
             personalInfo: value
-        }));
-        setFormStatus((s) =>({
-            ...s,
-            personalInfo: FormStatus.Success,
-            courseInfo: FormStatus.Pending
         }));
         setStep(1);
     };
