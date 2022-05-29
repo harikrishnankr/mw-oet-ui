@@ -1,5 +1,5 @@
-import { message, Modal, Steps } from "antd";
-import React, { useEffect, useState } from "react";
+import { Modal, Steps } from "antd";
+import { useEffect, useState } from "react";
 import { postRequest } from "../../core/apiService";
 import HeaderLight from "../../core/headerLight";
 import { isMobileDevice } from "../../core/utils";

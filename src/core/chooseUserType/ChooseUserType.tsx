@@ -1,5 +1,5 @@
 import { Modal } from "antd";
-import React, { useState } from "react";
+import React, { SyntheticEvent, useState } from "react";
 import { UserType } from "../constants/common";
 import "./chooseUserType.scss";
 
@@ -17,13 +17,18 @@ export function ChooseUserType({isOpen, accept, decline}: { isOpen: boolean; acc
         navigate(`${userType === UserType.Student ? 'student': 'staff'}/login`)
     };
 
+    const onClose = (e: SyntheticEvent) => {
+        e.preventDefault();
+        decline();
+    };
+
     return (
         <Modal
             title="Choose Account Type"
             centered
             visible={isOpen}
             footer={null}
-            closeIcon={<button type="button" aria-label="Close" className="ant-modal-close" onClick={decline}>
+            closeIcon={<a type="button" aria-label="Close" href="/#/" className="ant-modal-close" onClick={onClose}>
                 <span className="ant-modal-close-x">
                     <span role="img" aria-label="close" className="anticon anticon-close ant-modal-close-icon">
                         <svg viewBox="64 64 896 896" focusable="false" data-icon="close" width="1em" height="1em" fill="currentColor" aria-hidden="true">
@@ -31,21 +36,21 @@ export function ChooseUserType({isOpen, accept, decline}: { isOpen: boolean; acc
                         </svg>
                     </span>
                 </span>
-            </button>}
+            </a>}
             wrapClassName="Choose-User__Wrapper"
         >
             <div className="User-type__wrapper">
                 <div className={`Card__small ${userType === UserType.Student ? 'select': ''}`} onClick={() => setUserType(UserType.Student)}>
                     <div className="radio"><div></div></div>
                     <div className="icon">
-                        <img src={Student} />
+                        <img src={Student} alt="Student"/>
                     </div>
                     <div className="label">Student</div>
                 </div>
                 <div className={`Card__small ${userType === UserType.Staff ? 'select': ''}`} onClick={() => setUserType(UserType.Staff)}>
                     <div className="radio"><div></div></div>
                     <div className="icon">
-                        <img src={Teacher} />
+                        <img src={Teacher} alt="Staff" />
                     </div>
                     <div className="label">Staff</div>
                 </div>

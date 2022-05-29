@@ -1,0 +1,82 @@
+.ant-drawer-content-wrapper {
+    .ant-menu-inline {
+        border: none;
+    }
+}
+
+.Layout__wrapper {
+    height: 100%;
+    width: 100%;
+
+    .ant-layout {
+        height: 100% !important;
+    }
+
+    .ant-menu {
+        height: calc(100% - 186px);
+        margin-top: 10px;
+        overflow: auto;
+    }
+
+    .logo {
+        padding-left: 24px;
+        background: #53f;
+        background: linear-gradient(95deg, #5533ff 40%, #25ddf5 100%) !important;
+        height: 70px;
+        display: flex;
+        align-items: center;
+
+        img {
+            width: 140px;
+        }
+    }
+
+    .Mobile__Header--wrapper {
+        background: #53f;
+        background: linear-gradient(95deg, #5533ff 40%, #25ddf5 100%) !important;
+        box-shadow: 0 0 7px 1px rgb(0 0 0 / 10%);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 99;
+        transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        -webkit-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        -ms-transition: all 0.3s ease-in-out;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+
+        .icon img{
+            width: 27px;
+        }
+
+        .logo {
+            background: none !important;
+            padding-left: 0px;
+
+
+            img {
+                width: 120px;
+                margin: 0;
+            }
+        }
+    }
+}
+
+.Settings__menu {
+    .Settings__item {
+        padding-left: 24px !important;
+
+        &:hover {
+            color: #1890ff;
+        }
+    }
+
+    &.ant-menu {
+        height: auto !important;
+    }
+}
