@@ -2,6 +2,7 @@
 @import "./utility";
 @import url("./bootstrap.css");
 @import url("./animate.css");
+@import url("./_text-editor-override.scss");
 
 @import url("https://fonts.googleapis.com/css?family=Rubik:400,400i,500");
 @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600");
@@ -22,5 +23,15 @@ p {
 
     @media (min-width: 768px) and (max-width: 1024px) {
         padding: 80px 0px !important;
+    }
+}
+
+.ant-page-header-ghost {
+    height: calc(100% - 5px);
+    max-height: calc(100% - 5px);
+    overflow: auto;
+
+    @media only screen and (max-width: 767px) {
+        padding: 0px !important;
     }
 }

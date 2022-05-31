@@ -18,6 +18,8 @@
     "react-scripts": "5.0.1",
     "react-scroll": "^1.8.7",
     "sass": "^1.51.0",
+    "suneditor": "^2.43.8",
+    "suneditor-react": "^3.4.0",
     "typescript": "^4.6.4",
     "web-vitals": "^2.1.4"
   },

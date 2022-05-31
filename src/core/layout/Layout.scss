@@ -15,7 +15,8 @@
     .ant-menu {
         height: calc(100% - 186px);
         margin-top: 10px;
-        overflow: auto;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
 
     .logo {

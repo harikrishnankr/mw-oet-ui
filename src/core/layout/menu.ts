@@ -2,6 +2,11 @@ import { UserType } from "../constants/common";
 
 export const MenuItems = [{
     icon: "",
+    label: "Courses",
+    access: [UserType.Admin],
+    url: "/app/courses"
+}, {
+    icon: "",
     label: "Booking",
     access: [UserType.Admin],
     url: "/app/students"
@@ -10,11 +15,6 @@ export const MenuItems = [{
     label: "Students",
     access: [UserType.Admin],
     url: "/app/students"
-}, {
-    icon: "",
-    label: "Courses",
-    access: [UserType.Admin],
-    url: "/app/courses"
 }, {
     icon: "",
     label: "Staff",

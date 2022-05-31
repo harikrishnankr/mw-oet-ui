@@ -8,10 +8,11 @@ import UserWhite from "../../assets/images/user.png";
 import Ham from "../../assets/images/ham.png";
 import { isMobileDevice } from "../utils";
 import "./Layout.scss";
+import { getUserType, logout } from "../services";
 
 const { Content, Sider } = Layout;
 
-const MobileHeader = ({openDrawer}: any) => {
+const MobileHeader = ({openDrawer, onActionClick}: any) => {
 
     const onDrawerOpen = (e: SyntheticEvent) => {
         e.preventDefault();
@@ -23,13 +24,14 @@ const MobileHeader = ({openDrawer}: any) => {
           items={[
             {
               label: "Change Password",
-              key: '0',
+              key: 'CHANGE_PASSWORD',
             },
             {
               label: "Logout",
-              key: '1',
+              key: 'LOGOUT',
             }
           ]}
+          onClick={(value) => onActionClick(value.key)}
         />
     );
 
@@ -58,7 +60,7 @@ const MobileHeader = ({openDrawer}: any) => {
     );
 };
 
-const MenuList = ({ items, hideLogo, onClick }: any) => {
+const MenuList = ({ items, hideLogo, onClick, onActionClick }: any) => {
 
     const navigation = useNavigate();
 
@@ -81,10 +83,10 @@ const MenuList = ({ items, hideLogo, onClick }: any) => {
             <Menu theme="light" mode="inline" defaultSelectedKeys={['1']} items={items} onClick={onMenuClick}/>
             <ul className="ant-menu ant-menu-inline ant-menu-root Settings__menu">
                 <li className="ant-menu-item ant-menu-item-only-child Settings__item">
-                    <span className="ant-menu-title-content">Change Password</span>
+                    <span className="ant-menu-title-content" onClick={() => onActionClick("CHANGE_PASSWORD")}>Change Password</span>
                 </li>
                 <li className="ant-menu-item ant-menu-item-only-child Settings__item">
-                    <span className="ant-menu-title-content">Logout</span>
+                    <span className="ant-menu-title-content" onClick={() => onActionClick("LOGOUT")}>Logout</span>
                 </li>
             </ul>
         </>
@@ -92,10 +94,10 @@ const MenuList = ({ items, hideLogo, onClick }: any) => {
 };
 
 export function LayoutWrapper() {
-    const currentUserType: UserType = UserType.Admin;
-    const [collapsed] = useState(false);
+    const currentUserType: UserType = getUserType();
     const [isMobileDrawerOpen, setIsOpenDrawer] = useState(false);
     const isMobile = isMobileDevice();
+    const navigation = useNavigate();
     const fullWidth = window.innerWidth;
 
     const items: MenuProps['items'] = [...MenuItems]
@@ -108,6 +110,16 @@ export function LayoutWrapper() {
                 url :menu.url
             };
         });
+    
+    const onActionClick = (type: string) => {
+        switch (type) {
+            case "LOGOUT":
+                logout(navigation);
+                break;
+            case "CHANGE_PASSWORD":
+                break;
+        }
+    };
 
     return (
         <div className="Layout__wrapper">
@@ -123,10 +135,10 @@ export function LayoutWrapper() {
                             top: 0,
                             bottom: 0
                         }}
-                        width="250"
+                        width={ !isMobile && window.innerWidth <= 991 ? "230" : "250"}
                         theme="light"
                     >
-                        <MenuList items={items} />
+                        <MenuList items={items} onActionClick={onActionClick} />
                     </Sider>
                 }
                 {
@@ -138,13 +150,13 @@ export function LayoutWrapper() {
                         visible={isMobileDrawerOpen}
                         onClose={() => setIsOpenDrawer(false)}
                     >
-                        <MenuList items={items} hideLogo onClick={() => setIsOpenDrawer(false)}/>
+                        <MenuList items={items} hideLogo onClick={() => setIsOpenDrawer(false)} onActionClick={onActionClick}/>
                     </Drawer>
                 }
-                <Layout className="site-layout" style={{ marginLeft: !isMobile ? (!collapsed ? 250 : 80) : 0 }}>
-                    <Content style={!isMobile ? { margin: '24px 16px 0', overflow: 'initial' } : {  margin: '24px 16px 0', marginTop: '85px', overflow: 'initial' }}>
+                <Layout className="site-layout" style={{ marginLeft: !isMobile ? (window.innerWidth <= 991 ? 230 : 250) : 0 }}>
+                    <Content style={!isMobile ? { margin: '0px 16px 0', overflow: 'initial' } : {  margin: '0px 16px 0', marginTop: '85px', overflow: 'initial' }}>
                         {
-                            isMobile && <MobileHeader openDrawer={() => setIsOpenDrawer(true)}/>
+                            isMobile && <MobileHeader openDrawer={() => setIsOpenDrawer(true)} onActionClick={onActionClick}/>
                         }
                         <Outlet />
                     </Content>

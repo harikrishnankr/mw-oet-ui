@@ -5,17 +5,15 @@ import "./login.scss";
 
 interface ILogin {
     type: UserType;
+    onSubmit?: (t: any) => void;
+    loading?: boolean;
 }
 
-export function Login({ type }: ILogin) {
+export function Login({ type, onSubmit, loading }: ILogin) {
 
     const onFinish = (values: any) => {
-        console.log('Success:', values);
+        onSubmit && onSubmit(values);
     };
-    
-    const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
-    }; 
 
     return (
         <div className="Login__wrapper">
@@ -34,7 +32,6 @@ export function Login({ type }: ILogin) {
                         name="basic"
                         initialValues={{ remember: true }}
                         onFinish={onFinish}
-                        onFinishFailed={onFinishFailed}
                         autoComplete="off"
                     >
                         <Form.Item
@@ -53,7 +50,7 @@ export function Login({ type }: ILogin) {
                             <Input.Password size="large" placeholder="Enter your Password" />
                         </Form.Item>
                         <Form.Item>
-                            <Button type="primary" htmlType="submit" block size="large" className="mt-4">
+                            <Button type="primary" htmlType="submit" block size="large" className="mt-4" loading={loading}>
                                 Login
                             </Button>
                         </Form.Item>

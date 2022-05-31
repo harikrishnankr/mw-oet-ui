@@ -1,0 +1,15 @@
+.sun-editor {
+    height: calc(100% - 100px) !important;
+}
+
+.sun-editor .se-wrapper .se-wrapper-inner {
+    height: 100% !important;
+}
+
+.sun-editor .se-wrapper {
+    height: calc(100% - 50px) !important;
+
+    @media only screen and (max-width: 767px) {
+        height: calc(100% - 82px) !important;
+    }
+}

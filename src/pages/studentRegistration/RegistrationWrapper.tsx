@@ -91,7 +91,7 @@ export function RegistrationWrapper() {
         });
         payload.append("questions", JSON.stringify(questions));
 
-        postRequest("http://localhost:3001/student/booking", payload).then((res: any) => {
+        postRequest({ url: "/student/booking", payload, isFormData: true, skipAuth: true }).then((res: any) => {
             Modal.success({
                 content: res.message,
             });
