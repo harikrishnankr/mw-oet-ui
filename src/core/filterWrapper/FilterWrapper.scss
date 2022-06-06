@@ -1,0 +1,18 @@
+.Filter__wrapper {
+    margin-bottom: 20px;
+    
+    .Filter-icon__wrapper {
+        display: flex;
+        justify-content: flex-end;
+        padding-right: 10px;
+
+        .icon {
+            cursor: pointer;
+            img {
+                width: 22px;
+                height: 22px;
+                margin-right: 5px;
+            }
+        }
+    }
+}

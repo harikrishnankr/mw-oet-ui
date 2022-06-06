@@ -136,7 +136,7 @@ export function PersonalInfo({ formData, onSubmit }: { formData: IPersonalInfo, 
                     </div>
                     <div className="col-md-4">
                         <Form.Item name="dob" label="Date of Birth" rules={[{ required: true, message: 'Please input your Date of Birth!' }]}>
-                            <DatePicker value={formData.dob ? moment(formData.dob, DATE_FORMAT) : null }/>
+                            <DatePicker value={formData.dob ? moment(formData.dob, DATE_FORMAT) : null } format={DATE_FORMAT}/>
                         </Form.Item>
                     </div>
                     <div className="col-md-4">

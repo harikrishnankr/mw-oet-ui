@@ -1,6 +1,6 @@
-import { Modal, Steps } from "antd";
+import { message, Modal, Steps } from "antd";
 import { useEffect, useState } from "react";
-import { postRequest } from "../../core/apiService";
+import { getRequest, postRequest } from "../../core/apiService";
 import HeaderLight from "../../core/headerLight";
 import { isMobileDevice } from "../../core/utils";
 import { Assessment } from "./Assessment";
@@ -46,6 +46,7 @@ const DEFAULT_FORM_STATUS = {
 
 export function RegistrationWrapper() {
 
+    const [courses, setCourses] = useState([]);
     const [current, setStep] = useState(0);
     const [formData, setFormData] = useState<RegistrationForm>({ ...DEFAULT_FORM });
     const [formStatus, setFormStatus] = useState<RegistrationFormStatus>({ ...DEFAULT_FORM_STATUS });
@@ -107,6 +108,16 @@ export function RegistrationWrapper() {
             });
         });
     };
+
+    useEffect(() => {
+        getRequest({ url: "/course/getAll", skipAuth: true })
+        .then((res: any) => {
+            setCourses(res.data);
+        })
+        .catch(() => {
+            message.error("Couldn't fetch course list. Please try reloading the page!")
+        });
+    }, []);
 
     useEffect(() => {
         if (formStatus.assessment === FormStatus.Success) {
@@ -171,7 +182,7 @@ export function RegistrationWrapper() {
                     </Steps>
                     <div className="steps-content">
                         { current === 0 && <PersonalInfo formData={formData.personalInfo} onSubmit={onPersonalInfoSubmit}/> }
-                        { current === 1 && <CourseInfo formData={formData.courseInfo} onSubmit={onCourseInfoSubmit} previous={goToPersonalInfo}/> }
+                        { current === 1 && <CourseInfo formData={formData.courseInfo} onSubmit={onCourseInfoSubmit} previous={goToPersonalInfo} courses={courses}/> }
                         { current === 2 && <Assessment formData={formData.assessment} onSubmit={onAssessmentSubmit} previous={goToCourseInfo} /> }
                     </div>
                 </div>

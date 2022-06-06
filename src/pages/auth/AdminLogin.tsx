@@ -2,7 +2,7 @@ import { message } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { postRequest } from "../../core/apiService";
-import { UserType, USER_DATA } from "../../core/constants/common";
+import { APP_BASE_ROUTE, UserType, USER_DATA } from "../../core/constants/common";
 import { Login } from "../../core/login/Login";
 import { setData, setToken } from "../../core/utils";
 
@@ -25,7 +25,7 @@ export default function AdminLogin() {
             setToken(token);
             setData(USER_DATA, { userId, fullName, email, role });
             setLoading(false);
-            navigation("/app/students");
+            navigation(APP_BASE_ROUTE);
             message.success(res.message || "Failed to login");
         })
         .catch((err) => {

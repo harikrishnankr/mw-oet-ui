@@ -8,13 +8,13 @@ export interface IPostRequest {
     header?: HttpRequestHeader;
     isFormData?: boolean;
     skipAuth?: boolean;
+    method?: string;
 }
 
-
-const sendPostAPI = ({ url, payload, header, isFormData }: IPostRequest) => {
+const sendAPI = ({ url, payload, header, isFormData, method }: IPostRequest) => {
     return fetch(`${getBaseEndPoint()}${url}`, {
-        method: 'POST',
-        body: isFormData ? payload : JSON.stringify(payload),
+        method: method || 'GET',
+        ...((method && payload) ? { body: isFormData ? payload : JSON.stringify(payload) } : {}),
         ...(header ? { headers: header } : {})
     })
     .then(res => res.json())
@@ -36,5 +36,27 @@ export const postRequest = ({ url, payload, header, isFormData, skipAuth }: IPos
         ...(header?  header : {})
     };
 
-    return sendPostAPI({ url, payload, header: fetchHeader, isFormData });
+    return sendAPI({ url, payload, header: fetchHeader, isFormData, method: 'POST' });
+};
+
+export const getRequest = ({ url, payload, header, skipAuth }: IPostRequest) => {
+    const token = isLoggedIn() ? getToken() : '';
+    const fetchHeader: HttpRequestHeader = {
+        'Content-Type': 'application/json',
+        ...(!skipAuth ? { "Authorization": token } as HttpRequestHeader : {}),
+        ...(header?  header : {})
+    };
+
+    return sendAPI({ url, payload: null, header: fetchHeader });
+};
+
+export const deleteRequest = ({ url, payload, header, skipAuth }: IPostRequest) => {
+    const token = isLoggedIn() ? getToken() : '';
+    const fetchHeader: HttpRequestHeader = {
+        'Content-Type': 'application/json',
+        ...(!skipAuth ? { "Authorization": token } as HttpRequestHeader : {}),
+        ...(header?  header : {})
+    };
+
+    return sendAPI({ url, payload, header: fetchHeader, method: 'DELETE' });
 };

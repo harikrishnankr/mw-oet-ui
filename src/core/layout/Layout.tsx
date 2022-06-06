@@ -1,8 +1,8 @@
-import React, { SyntheticEvent, useState } from "react";
-import { Outlet, useNavigate } from "react-router";
+import React, { SyntheticEvent, useEffect, useState } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router";
 import { Drawer, Layout, Menu, MenuProps, Dropdown, Space } from 'antd';
 import { MenuItems } from "./menu";
-import { UserType } from "../constants/common";
+import { APP_BASE_ROUTE, UserType } from "../constants/common";
 import LogoWhite from "../../assets/images/logo.png";
 import UserWhite from "../../assets/images/user.png";
 import Ham from "../../assets/images/ham.png";
@@ -43,7 +43,7 @@ const MobileHeader = ({openDrawer, onActionClick}: any) => {
                 </a>
             </div>
             <div className="logo">
-                <a href="/app/students">
+                <a href={APP_BASE_ROUTE}>
                     <img src={LogoWhite} alt="Logo"/>
                 </a>
             </div>
@@ -61,8 +61,14 @@ const MobileHeader = ({openDrawer, onActionClick}: any) => {
 };
 
 const MenuList = ({ items, hideLogo, onClick, onActionClick }: any) => {
-
     const navigation = useNavigate();
+    const location = useLocation();
+    const [selected, setSelected] = useState<string[]>([]);
+
+    useEffect(() => {
+        const selectedKey = items.find((i: any) => i.url === location.pathname)?.key;
+        setSelected([selectedKey]);
+    }, [location]);
 
     const onMenuClick = ({ key }: { key: string }) => {
         const url = items[+key - 1]?.url;
@@ -75,12 +81,12 @@ const MenuList = ({ items, hideLogo, onClick, onActionClick }: any) => {
             {
                 !hideLogo &&
                 <div className="logo">
-                    <a href="/app/students">
+                    <a href={APP_BASE_ROUTE}>
                         <img src={LogoWhite} alt="Logo" />
                     </a>
                 </div>
             }
-            <Menu theme="light" mode="inline" defaultSelectedKeys={['1']} items={items} onClick={onMenuClick}/>
+            <Menu theme="light" mode="inline" selectedKeys={selected} items={items} onClick={onMenuClick}/>
             <ul className="ant-menu ant-menu-inline ant-menu-root Settings__menu">
                 <li className="ant-menu-item ant-menu-item-only-child Settings__item">
                     <span className="ant-menu-title-content" onClick={() => onActionClick("CHANGE_PASSWORD")}>Change Password</span>

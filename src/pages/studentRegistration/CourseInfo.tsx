@@ -17,7 +17,7 @@ export interface ICourseInfo {
     vertical?: string;
 }
 
-export function CourseInfo({ formData, onSubmit, previous }: { formData: ICourseInfo, onSubmit: (t: any) => any, previous: (t: any) => any }) {
+export function CourseInfo({ formData, onSubmit, previous, courses }: { formData: ICourseInfo, onSubmit: (t: any) => any, previous: (t: any) => any, courses: any[] }) {
     const [form] = Form.useForm();
     const [currentStatus, setCurrentStatus] = useState<string|null>(formData.currentStatus || null);
 
@@ -85,8 +85,11 @@ export function CourseInfo({ formData, onSubmit, previous }: { formData: ICourse
                         <Form.Item name="courseType" label="Course Type" rules={[{ required: true, message: 'Please enter the Course Type!' }]}>
                             <Radio.Group>
                                 <Space direction="vertical">
-                                    <Radio value="OET Regular">OET Regular</Radio>
-                                    <Radio value="OET Speaking Only">OET Speaking Only</Radio>
+                                    {
+                                        courses.map((c) => (
+                                            <Radio value={c.id} key={c.id}>{c.name}</Radio>
+                                        ))
+                                    }
                                 </Space>
                             </Radio.Group>
                         </Form.Item>

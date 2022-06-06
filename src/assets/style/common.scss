@@ -35,3 +35,14 @@ p {
         padding: 0px !important;
     }
 }
+
+.ant-spin-nested-loading, .ant-spin-container {
+    height: 100% !important;
+}
+
+.ant-table-thead>tr>th {
+    background: #D4D2E0 !important;
+    border-bottom: 1px solid #D4D2E0 !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+}

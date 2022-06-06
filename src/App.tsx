@@ -12,7 +12,6 @@ const AdminLoginAsync = lazy(() => import("./pages/auth/AdminLogin"));
 const StudentLoginAsync = lazy(() => import("./pages/auth/StudentLogin"));
 const StaffLoginAsync = lazy(() => import("./pages/auth/StaffLogin"));
 
-
 function App() {
   return (
     <div className="App">

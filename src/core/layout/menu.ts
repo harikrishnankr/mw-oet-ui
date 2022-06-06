@@ -2,14 +2,14 @@ import { UserType } from "../constants/common";
 
 export const MenuItems = [{
     icon: "",
+    label: "Booking",
+    access: [UserType.Admin],
+    url: "/app/booking"
+}, {
+    icon: "",
     label: "Courses",
     access: [UserType.Admin],
     url: "/app/courses"
-}, {
-    icon: "",
-    label: "Booking",
-    access: [UserType.Admin],
-    url: "/app/students"
 }, {
     icon: "",
     label: "Students",
