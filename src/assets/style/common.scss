@@ -3,6 +3,7 @@
 @import url("./bootstrap.css");
 @import url("./animate.css");
 @import url("./_text-editor-override.scss");
+@import url("./__react-pdf.scss");
 
 @import url("https://fonts.googleapis.com/css?family=Rubik:400,400i,500");
 @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600");
@@ -46,3 +47,12 @@ p {
     padding-top: 8px !important;
     padding-bottom: 8px !important;
 }
+
+.ant-segmented-group label {
+    margin-bottom: 0px;
+}
+
+.ant-popover {
+    max-width: 300px !important;
+}
+  

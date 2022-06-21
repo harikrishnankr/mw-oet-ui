@@ -19,65 +19,65 @@ export const MenuItems = [{
     icon: "",
     label: "Staff",
     access: [UserType.Admin],
-    url: "/app/courses"
+    url: "/app/staff"
 }, {
     icon: "",
     label: "Study Materials",
     access: [UserType.Admin],
-    url: "/app/courses"
+    url: "/app/study-materials"
 }, {
     icon: "",
     label: "Leaves",
     access: [UserType.Admin],
-    url: "/app/courses"
+    url: "/app/leaves"
 }, {
     icon: "",
     label: "Slots",
     access: [UserType.Admin],
-    url: "/app/courses"
+    url: "/app/slots"
 }, {
     icon: "",
     label: "Notifications",
     access: [UserType.Admin],
-    url: "/app/courses"
+    url: "/app/notifications"
 }, {
     icon: "",
     label: "Terms & Conditions",
     access: [UserType.Admin],
-    url: "/app/courses"
+    url: "/app/terms-and-condition"
 }, {
     icon: "",
     label: "Leave Request",
     access: [UserType.Staff],
-    url: "/app/courses"
+    url: "/app/leave-requests"
 }, {
     icon: "",
     label: "Bank Details",
     access: [UserType.Staff],
-    url: "/app/courses"
+    url: "/app/bank-details"
 }, {
     icon: "",
     label: "Upcoming Classes",
     access: [UserType.Staff],
-    url: "/app/courses"
+    url: "/app/upcoming-classes"
 }, {
     icon: "",
     label: "Feedback Tracking",
     access: [UserType.Staff],
-    url: "/app/courses"
+    url: "/app/feedback-tracking"
 }, {
     icon: "",
     label: "Upcoming Slots",
     access: [UserType.Student],
-    url: "/app/courses"
+    url: "/app/upcoming-slots"
 }, {
     icon: "",
     label: "View Study Materials",
     access: [UserType.Student],
-    url: "/app/courses"
+    url: "/app/view-study-materials"
 }, {
     icon: "",
     label: "Feedback Listing",
     access: [UserType.Student],
-    url: "/app/courses"
+    url: "/app/feedback-listing"
 }];

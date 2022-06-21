@@ -1,4 +1,4 @@
-import { DatePicker, message, Radio, Spin, Table } from "antd";
+import { message, Table } from "antd";
 import { RangePickerProps } from "antd/lib/date-picker";
 import confirm from "antd/lib/modal/confirm";
 import { ColumnsType } from "antd/lib/table";
@@ -7,7 +7,7 @@ import React, { SyntheticEvent, useCallback, useEffect, useMemo, useState } from
 import { getRequest, postRequest } from "../../core/apiService";
 import { DATE_FORMAT } from "../../core/constants/common";
 import { Filter, FilterType, FilterWrapper, IFilterOptions } from "../../core/filterWrapper/FilterWrapper";
-import { PageWrapper } from "../../core/PageWrapper";
+import { PageWrapper, toggleSpinner } from "../../core/PageWrapper";
 import { formatDate } from "../../core/utils";
 import { BookingDetails } from "./BookingDetails";
 
@@ -35,7 +35,6 @@ export function BookingList() {const [isModalOpen, toggleModal] = useState<boole
         pageSize: 10,
         current: 1
     });
-    const [loading, toggleLoading] = useState<boolean>(false);
     const [courseOptions, setCourseOptions] = useState<{label: string; value: string;}[]>([]);
     const disabledDate: RangePickerProps['disabledDate'] = current => {
         // Can not select days before today and today
@@ -51,17 +50,17 @@ export function BookingList() {const [isModalOpen, toggleModal] = useState<boole
             okType: 'primary',
             cancelText: 'No',
             onOk() {
-                toggleLoading(true);
+                toggleSpinner(true);
                 e.preventDefault();
                 postRequest({ url: `/student/approve/${record.id}`, payload: {} })
                     .then(() => {
                         getBookingList();
                         message.success(record.name + " Approved successfully!");
-                        toggleLoading(false);
+                       toggleSpinner(false);
                     })
                     .catch((err) => {
                         message.success(err.message);
-                        toggleLoading(false);
+                       toggleSpinner(false);
                     });
             },
             onCancel() {
@@ -124,7 +123,7 @@ export function BookingList() {const [isModalOpen, toggleModal] = useState<boole
         if ((filter.startDate || filter.endDate) && (!filter.startDate || !filter.endDate)) {
             return;
         }
-        toggleLoading(true);
+        toggleSpinner(true);
         postRequest({
             url: "/student/booking-list",
             payload: {
@@ -134,7 +133,7 @@ export function BookingList() {const [isModalOpen, toggleModal] = useState<boole
             }
         })
         .then((res) => {
-            toggleLoading(false);
+            toggleSpinner(false);
             setSelectedRecord(null);
             setBookings(res.data.docs.map((d: any) => ({ ...d, key: d._id, createdDate: formatDate(d.createdDate) })));
             setPaginationConfig((c: any) => ({
@@ -144,7 +143,7 @@ export function BookingList() {const [isModalOpen, toggleModal] = useState<boole
             }));
         })
         .catch((err) => {
-            toggleLoading(false);
+            toggleSpinner(false);
             console.log(err);
         });
     };
@@ -171,13 +170,14 @@ export function BookingList() {const [isModalOpen, toggleModal] = useState<boole
     }, [filter]);
 
     return (
-        <Spin spinning={loading}>
+        <>
             <PageWrapper title="Bookings" subTitle="View and Approve Bookings">
                 <FilterWrapper>
-                    <Filter name="course" type={FilterType.RadioGroup} radioOptions={courseOptions} value={filter.course} onChange={handleInputChange}/>
-                    <Filter name="startDate" type={FilterType.DatePicker} value={filter.startDate}
+                    <Filter name="course" type={FilterType.RadioGroup} radioOptions={courseOptions}
+                        value={filter.course} onChange={handleInputChange} label="Course Type"/>
+                    <Filter name="startDate" type={FilterType.DatePicker} value={filter.startDate} label="Start Date"
                         onChange={handleInputChange} placeholder="Start Date" format={DATE_FORMAT} disabledDate={disabledDate} />
-                    <Filter name="endDate" type={FilterType.DatePicker} value={filter.endDate}
+                    <Filter name="endDate" type={FilterType.DatePicker} value={filter.endDate} label="End Date"
                         onChange={handleInputChange} placeholder="End Date" format={DATE_FORMAT} disabledDate={disabledDate} />
                 </FilterWrapper>
                 <Table
@@ -191,6 +191,6 @@ export function BookingList() {const [isModalOpen, toggleModal] = useState<boole
                 />
             </PageWrapper>
             <BookingDetails isOpen={isModalOpen} details={selectedRecord} courses={courses} handleCancel={() => toggleModal(false)} />
-        </Spin>
+        </>
     );   
 }

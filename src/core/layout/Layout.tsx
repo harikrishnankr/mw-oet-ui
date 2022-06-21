@@ -2,7 +2,7 @@ import React, { SyntheticEvent, useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router";
 import { Drawer, Layout, Menu, MenuProps, Dropdown, Space } from 'antd';
 import { MenuItems } from "./menu";
-import { APP_BASE_ROUTE, UserType } from "../constants/common";
+import { APP_BASE_ROUTE, STAFF_BASE_ROUTE, UserType } from "../constants/common";
 import LogoWhite from "../../assets/images/logo.png";
 import UserWhite from "../../assets/images/user.png";
 import Ham from "../../assets/images/ham.png";
@@ -61,13 +61,19 @@ const MobileHeader = ({openDrawer, onActionClick}: any) => {
 };
 
 const MenuList = ({ items, hideLogo, onClick, onActionClick }: any) => {
+    const currentUserType: UserType = getUserType();
     const navigation = useNavigate();
     const location = useLocation();
     const [selected, setSelected] = useState<string[]>([]);
 
     useEffect(() => {
-        const selectedKey = items.find((i: any) => i.url === location.pathname)?.key;
-        setSelected([selectedKey]);
+        const selectedRoute = items.find((i: any) => i.url === location.pathname &&  i.access.includes(currentUserType));
+        if (selectedRoute) {
+            setSelected([selectedRoute.key]);
+        } else {
+            const baseRoute = currentUserType === UserType.Admin ? APP_BASE_ROUTE : STAFF_BASE_ROUTE;
+            navigation(baseRoute);
+        }
     }, [location]);
 
     const onMenuClick = ({ key }: { key: string }) => {
@@ -113,7 +119,8 @@ export function LayoutWrapper() {
                 key: String(index + 1),
                 icon: null,
                 label: menu.label,
-                url :menu.url
+                url :menu.url,
+                access: menu.access
             };
         });
     

@@ -1,9 +1,9 @@
 import React, { SyntheticEvent, useEffect, useMemo, useState } from "react";
 import { Button, message, Spin, Table } from "antd";
 import { ColumnsType } from "antd/lib/table";
-import { PageWrapper } from "../../core/PageWrapper";
+import { PageWrapper, toggleSpinner } from "../../core/PageWrapper";
 import { AddEditCourse } from "./AddEditCourse";
-import { deleteRequest, getRequest, postRequest } from "../../core/apiService";
+import { deleteRequest, getRequest } from "../../core/apiService";
 import confirm from "antd/lib/modal/confirm";
 
 interface DataType {
@@ -18,7 +18,6 @@ export function CourseListing() {
     const [isModalOpen, toggleModal] = useState<boolean>(false);
     const [courses, setCourseList] = useState<DataType[]>([]);
     const [selectedRecord, setSelectedRecord] = useState<any>(null);
-    const [loading, toggleLoading] = useState<boolean>(false);
 
     const onEdit = (record: any, e: SyntheticEvent) => {
         e.preventDefault();
@@ -39,17 +38,17 @@ export function CourseListing() {
             okType: 'danger',
             cancelText: 'No',
             onOk() {
-                toggleLoading(true);
+                toggleSpinner(true);
                 e.preventDefault();
                 deleteRequest({ url: `/course/delete/${record._id}`, payload: null })
                     .then(() => {
                         getCourseList();
                         message.success("Course deleted successfully!");
-                        toggleLoading(false);
+                        toggleSpinner(false);
                     })
                     .catch((err) => {
                         message.success(err.message);
-                        toggleLoading(false);
+                        toggleSpinner(false);
                     });
             },
             onCancel() {
@@ -81,15 +80,15 @@ export function CourseListing() {
     }), [courses]);
 
     const getCourseList = () => {
-        toggleLoading(true);
+        toggleSpinner(true);
         getRequest({ url: "/course/list", payload: {} })
             .then((res) => {
-                toggleLoading(false);
+                toggleSpinner(false);
                 setSelectedRecord(null);
                 setCourseList(res.data.map((d: any) => ({ ...d, key: d._id })));
             })
             .catch((err) => {
-                toggleLoading(false);
+                toggleSpinner(false);
                 console.log(err);
             });
     };
@@ -105,7 +104,7 @@ export function CourseListing() {
     };
 
     return (
-        <Spin spinning={loading}>
+        <>
             <PageWrapper title="Courses" subTitle="Add/Edit Course Details" actions={[
                 <Button type="primary" key="1" onClick={onAdd}>Add Course</Button>
             ]}>
@@ -116,6 +115,6 @@ export function CourseListing() {
                 />
             </PageWrapper>
             <AddEditCourse isOpen={isModalOpen} handleOk={onAddEditSuccess} handleCancel={() => toggleModal(false)} data={selectedRecord}/>
-        </Spin>
+        </>
     );
 }

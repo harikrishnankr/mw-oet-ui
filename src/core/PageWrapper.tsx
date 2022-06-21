@@ -1,5 +1,6 @@
-import { Button, Descriptions, PageHeader } from "antd";
-import React, { ReactNode } from "react";
+import { PageHeader, Spin } from "antd";
+import { ReactNode, useEffect, useState } from "react";
+import { EventEmitter } from "./eventEmitter";
 
 export interface IPageWrapper {
     title: string;
@@ -8,15 +9,37 @@ export interface IPageWrapper {
     children: any;
 }
 
+const eventEmitter = new EventEmitter();
+
+export const toggleSpinner = (loading: boolean) => {
+    eventEmitter.emit("showLoading", loading);
+};
+
 export function PageWrapper({ title, subTitle, actions, children }: IPageWrapper) {
+    const [loading, toggleLoader] = useState(false);
+
+    const handleLoading = (value: boolean) => {
+        toggleLoader(value);
+    };
+
+    useEffect(() => {
+        eventEmitter.on('showLoading', handleLoading);
+
+        return () => {
+            eventEmitter.removeListener("showLoading", handleLoading);
+        };
+    }, []);
+
     return (
-        <PageHeader
-            className="site-page-header"
-            title={title}
-            subTitle={subTitle}
-            extra={actions || []}
-        >
-            {children}
-        </PageHeader>
+        <Spin spinning={loading}>
+            <PageHeader
+                className="site-page-header"
+                title={title}
+                subTitle={subTitle}
+                extra={actions || []}
+            >
+                {children}
+            </PageHeader>
+        </Spin>
     );
 }
