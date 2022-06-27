@@ -2,13 +2,14 @@ import React, { SyntheticEvent, useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router";
 import { Drawer, Layout, Menu, MenuProps, Dropdown, Space } from 'antd';
 import { MenuItems } from "./menu";
-import { APP_BASE_ROUTE, STAFF_BASE_ROUTE, UserType } from "../constants/common";
+import { APP_BASE_ROUTE, STAFF_BASE_ROUTE, STUDENT_BASE_ROUTE, UserType } from "../constants/common";
 import LogoWhite from "../../assets/images/logo.png";
 import UserWhite from "../../assets/images/user.png";
 import Ham from "../../assets/images/ham.png";
 import { isMobileDevice } from "../utils";
 import "./Layout.scss";
 import { getUserType, logout } from "../services";
+import { ChangePassword } from "../../pages/auth/ChangePassword";
 
 const { Content, Sider } = Layout;
 
@@ -71,7 +72,7 @@ const MenuList = ({ items, hideLogo, onClick, onActionClick }: any) => {
         if (selectedRoute) {
             setSelected([selectedRoute.key]);
         } else {
-            const baseRoute = currentUserType === UserType.Admin ? APP_BASE_ROUTE : STAFF_BASE_ROUTE;
+            const baseRoute = currentUserType === UserType.Admin ? APP_BASE_ROUTE : (currentUserType === UserType.Staff ? STAFF_BASE_ROUTE : STUDENT_BASE_ROUTE);
             navigation(baseRoute);
         }
     }, [location]);
@@ -108,6 +109,7 @@ const MenuList = ({ items, hideLogo, onClick, onActionClick }: any) => {
 export function LayoutWrapper() {
     const currentUserType: UserType = getUserType();
     const [isMobileDrawerOpen, setIsOpenDrawer] = useState(false);
+    const [isChangePasswordOpen, toggleChangePassword] = useState<boolean>(false);
     const isMobile = isMobileDevice();
     const navigation = useNavigate();
     const fullWidth = window.innerWidth;
@@ -130,8 +132,14 @@ export function LayoutWrapper() {
                 logout(navigation);
                 break;
             case "CHANGE_PASSWORD":
+                setIsOpenDrawer(false);
+                toggleModal();
                 break;
         }
+    };
+
+    const toggleModal = () => {
+        toggleChangePassword((isOpen) => !isOpen);
     };
 
     return (
@@ -175,6 +183,7 @@ export function LayoutWrapper() {
                     </Content>
                 </Layout>
             </Layout>
+            <ChangePassword isOpen={isChangePasswordOpen} toggleModal={toggleModal}/>
         </div>
     );
 }

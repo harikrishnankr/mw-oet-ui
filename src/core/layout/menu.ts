@@ -67,14 +67,14 @@ export const MenuItems = [{
     url: "/app/feedback-tracking"
 }, {
     icon: "",
-    label: "Upcoming Slots",
-    access: [UserType.Student],
-    url: "/app/upcoming-slots"
-}, {
-    icon: "",
     label: "View Study Materials",
     access: [UserType.Student],
     url: "/app/view-study-materials"
+}, {
+    icon: "",
+    label: "Upcoming Slots",
+    access: [UserType.Student],
+    url: "/app/upcoming-slots"
 }, {
     icon: "",
     label: "Feedback Listing",

@@ -8,6 +8,8 @@ const StudyMaterialsAsync = lazy(() => import("./pages/studyMaterials"));
 const TermsAndConditionAsync = lazy(() => import("./pages/termsAndCondition"));
 const LeaveRequestsAsync = lazy(() => import("./pages/leaveRequests"));
 const BankDetailsAsync = lazy(() => import("./pages/bankDetails"));
+const ViewStudyMaterialsAsync = lazy(() => import("./pages/studyMaterials/ViewStudentStudyMaterial"));
+const SlotsAsync = lazy(() => import("./pages/slots"));
 
 export const routes = [{
     key: 1,
@@ -55,6 +57,24 @@ export const routes = [{
     key: 8,
     path: "/app/bank-details",
     component: <BankDetailsAsync />,
+    private: true,
+    lazy: true
+}, {
+    key: 9,
+    path: "/app/view-study-materials",
+    component: <ViewStudyMaterialsAsync />,
+    private: true,
+    lazy: true
+}, {
+    key: 10,
+    path: "/app/leaves",
+    component: <LeaveRequestsAsync />,
+    private: true,
+    lazy: true
+}, {
+    key: 11,
+    path: "/app/slots",
+    component: <SlotsAsync />,
     private: true,
     lazy: true
 }];

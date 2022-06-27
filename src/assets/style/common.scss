@@ -55,4 +55,37 @@ p {
 .ant-popover {
     max-width: 300px !important;
 }
-  
+
+.ant-table-expanded-row-fixed {
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.course-dots {
+    top: -25px !important;
+}
+
+.ant-carousel .slick-dots {
+    li {
+        height: 7px;
+        width: 25px;
+    }
+
+    li.slick-active {
+        width: 40px;
+    }
+
+    li button {
+        background-color: #5434ff !important;
+        height: 7px;
+    }
+}
+
+.ant-tabs>.ant-tabs-nav .ant-tabs-nav-add, .ant-tabs>div>.ant-tabs-nav .ant-tabs-nav-add {
+    padding: 10px 14px !important;
+}
+
+.ant-picker-range {
+    width: 100%;
+}

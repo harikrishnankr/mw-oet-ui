@@ -32,6 +32,7 @@ export default function StaffLogin() {
             setLoading(false);
         });
     };
+
     return (
         <Login type={UserType.Staff} onSubmit={login} loading={loading} />
     );

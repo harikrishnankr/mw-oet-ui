@@ -1,11 +1,11 @@
-import { Button, Popover, Table } from "antd";
+import { Button, message, Popover, Spin, Table } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import moment from "moment";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { postRequest } from "../../core/apiService";
-import { DATE_FORMAT } from "../../core/constants/common";
+import { DATE_FORMAT, UserType } from "../../core/constants/common";
 import { Filter, FilterType, FilterWrapper } from "../../core/filterWrapper/FilterWrapper";
-import { toggleSpinner } from "../../core/PageWrapper";
+import { getUserType } from "../../core/services";
 import { formatDate } from "../../core/utils";
 
 interface DataType {
@@ -30,8 +30,11 @@ const STATUS_OPTIONS = [{
     value: "REJECTED"
 }];
 
-export function LeaveHistory() {
+export function LeaveHistory({ staffList }: { staffList: { label: string; value: string; }[] }) {
+    const currentUserRole = getUserType();
+    const [loading, toggleLoader] = useState(false);
     const [leaves, setLeaves] = useState([]);
+    const [staffs, setStaffs] = useState([]);
     const [paginationConfig, setPaginationConfig] = useState<any>({
         total: 0,
         pageSize: 10,
@@ -40,9 +43,10 @@ export function LeaveHistory() {
     const [filter, setFilter] = useState({
         limit: 10,
         page: 1,
-        status: "",
+        status: "PENDING",
         startDate: null,
-        endDate: null
+        endDate: null,
+        staffId: ""
     });
 
     const handleVisibleChange = (record: any, newVisible: boolean) => {
@@ -60,16 +64,36 @@ export function LeaveHistory() {
         });
     };
 
+    const updateStatus = (staffId: string, approve: boolean) => {
+        toggleLoader(true);
+        postRequest({ url: ("/leave/status-update/" + staffId), payload: { approve } })
+        .then((res) => {
+            toggleLoader(false);
+            message.success(res.message);
+            getLeaveHistory();
+        })
+        .catch((err) => {
+            toggleLoader(false);
+            message.error("Couldn't change the leave status. Please try again.");
+        });
+    };
+
     const columns: ColumnsType<DataType> = useMemo(() => [
+        {
+            title: 'Staff',
+            dataIndex: '',
+            key: '',
+            render: (text: any, record: any) => record?.userDetails?.name
+        },
         { title: 'Leave Date', dataIndex: 'leaveDate', key: 'leaveDate' },
         { title: 'Applied On', dataIndex: 'appliedOn', key: 'appliedOn' },
         {
             title: 'Reason',
             dataIndex: '',
             key: 'x',
-            fixed: 'right',
+            fixed: currentUserRole === UserType.Admin ? '' : 'right',
             width: 200,
-            render: (text, record: any) => {
+            render: (text: any, record: any) => {
                 return (
                     <Popover
                         content={
@@ -80,7 +104,7 @@ export function LeaveHistory() {
                         visible={record.reasonVisible}
                         onVisibleChange={(visible) => handleVisibleChange(record, visible)}
                     >
-                        <Button type="primary">Reason</Button>
+                        <Button type="primary" ghost>Reason</Button>
                     </Popover>
                 )
             }
@@ -89,17 +113,37 @@ export function LeaveHistory() {
             title: 'Status',
             dataIndex: '',
             key: 'status',
-            fixed: 'right',
-            render: (text, record: any) => {
+            fixed: currentUserRole === UserType.Admin ? '' : 'right',
+            render: (text: any, record: any) => {
                 return (
                     <>{record.status}</>
                 )
             }
-        }
+        },
+       ...(currentUserRole === UserType.Admin ? [{
+            title: 'Actins',
+            dataIndex: '',
+            key: 'x',
+            fixed: 'right',
+            width: 200,
+            render: (text: any, record: any) => {
+                return (
+                    <>
+                        {
+                            record.status === "PENDING" &&
+                            <div className="d-flex">
+                                <Button type="primary" onClick={() => updateStatus(record.id, true)}>Approve</Button>
+                                <Button type="primary" danger onClick={() => updateStatus(record.id, false)} className="ml-2">Reject</Button>
+                            </div>
+                        }
+                    </>
+                )
+            }
+        }] : []) as any
     ], []);
 
     const getLeaveHistory = () => {
-        toggleSpinner(true);
+        toggleLoader(true);
         postRequest({
             url: "/leave/staff/list",
             payload: {
@@ -109,7 +153,7 @@ export function LeaveHistory() {
             }
         })
         .then((res) => {
-            toggleSpinner(false);
+            toggleLoader(false);
             const history = res.data.docs.map((d: any) => ({ ...d, key: d._id, appliedOn: formatDate(d.createAt) }))
             setLeaves([...history] as never[]);
             setPaginationConfig((c: any) => ({
@@ -119,7 +163,7 @@ export function LeaveHistory() {
             }));
         })
         .catch(() => {
-            toggleSpinner(false);
+            toggleLoader(false);
         });
     };
 
@@ -133,6 +177,7 @@ export function LeaveHistory() {
     const handleInputChange = useCallback((e: any) => {
         const { target } = e;
         if (target) {
+            console.log(target.name, target.value);
             setFilter((f) => ({
                 ...f,
                 page: 1,
@@ -149,9 +194,15 @@ export function LeaveHistory() {
         getLeaveHistory();
     }, [filter]);
 
+    useEffect(() => {
+        setStaffs([{value: "", label: "All"}, ...staffList] as never[]);
+    }, [staffList]);
+
     return (
-        <> 
+        <Spin spinning={loading}> 
             <FilterWrapper>
+                { staffs.length ? <Filter name="staffId" type={FilterType.Select} value={filter.staffId} options={staffs}
+                    onChange={handleInputChange} placeholder="Staff" label="Staff"/> : null }
                 <Filter name="status" type={FilterType.Select} value={filter.status} options={STATUS_OPTIONS}
                     onChange={handleInputChange} placeholder="Status" label="Status"/>
                 <Filter name="startDate" type={FilterType.DatePicker} value={filter.startDate} label="Start Date"
@@ -168,6 +219,6 @@ export function LeaveHistory() {
                         x: true
                     }}
                 />
-        </>
+        </Spin>
     )
 }

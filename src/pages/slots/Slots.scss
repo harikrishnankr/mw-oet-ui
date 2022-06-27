@@ -1,0 +1,24 @@
+.Slots__Wrapper {
+    background-color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+}
+
+.Slots-warning__Wrapper {
+    background-color: #ffffe8;
+    padding: 7px 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.Add-slot__wrapper .ant-modal-body {
+    padding: 5px;
+}
+
+.Slot-list_wrapper {
+    .Slot-list {
+        // min-width: 430px;
+        display: flex;
+        overflow: auto;
+    }
+}

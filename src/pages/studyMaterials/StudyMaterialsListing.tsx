@@ -2,8 +2,10 @@ import { Button, message, Table } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import React, { SyntheticEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { getRequest, postRequest } from "../../core/apiService";
+import { UserType } from "../../core/constants/common";
 import { Filter, FilterType, FilterWrapper } from "../../core/filterWrapper/FilterWrapper";
 import { PageWrapper, toggleSpinner } from "../../core/PageWrapper";
+import { getUserType } from "../../core/services";
 import { formatDate, getBaseDocumentEndPoint, isMobileDevice } from "../../core/utils";
 import { AddStudyMaterials } from "./AddStudyMaterials";
 
@@ -17,6 +19,7 @@ interface DataType {
 }
 
 export function StudyMaterialsListing() {
+    const currentUserRole = getUserType();
     const [courses, setCourses] = useState<{ label: string; value: string; }[]>([]);
     const [studyMaterials, setStudyMaterials] = useState([]);
     const [paginationConfig, setPaginationConfig] = useState<any>({
@@ -145,9 +148,9 @@ export function StudyMaterialsListing() {
     };
 
     return (
-        <PageWrapper title="Study Materials" subTitle={!isMobile ? "View and Add Study Materials" : ""} actions={[
+        <PageWrapper title="Study Materials" subTitle={(!isMobile && currentUserRole === UserType.Admin) ? "View and Add Study Materials" : ""} actions={currentUserRole === UserType.Admin ? [
             <Button type="primary" key="1" onClick={onAdd}>Add Material</Button>
-        ]}>
+        ] : []}>
             <FilterWrapper>
                 <Filter name="courseId" type={FilterType.RadioGroup} radioOptions={courses}
                     value={filter.courseId} onChange={handleInputChange} label="Course Type"
@@ -165,7 +168,7 @@ export function StudyMaterialsListing() {
                     x: true
                 }}
             />
-            <AddStudyMaterials isOpen={isAddOpen} handleCancel={onAddClose} courses={courses}/>
+            { currentUserRole === UserType.Admin && <AddStudyMaterials isOpen={isAddOpen} handleCancel={onAddClose} courses={courses}/> }
         </PageWrapper>
     );
 }

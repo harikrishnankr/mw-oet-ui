@@ -41,7 +41,7 @@ export function AddEditCourse({ isOpen, handleOk, handleCancel, data }: IAddEdit
                 toggleLoading(false);
             })
             .catch((err) => {
-                message.success(`${data ? "Edit": "Add"} course failed!`);
+                message.error(`${data ? "Edit": "Add"} course failed!`);
                 handleCancel && handleCancel(err);
                 toggleLoading(false);
             });
