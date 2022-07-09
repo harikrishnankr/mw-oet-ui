@@ -1,4 +1,4 @@
-import { Button, Empty, message, Tabs } from "antd";
+import { Button, Empty, message, Modal, Tabs } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import { deleteRequest, getRequest } from "../../core/apiService";
 import { PageWrapper, toggleSpinner } from "../../core/PageWrapper";
@@ -8,16 +8,19 @@ import { SlotList } from "./SlotList";
 import "./Slots.scss";
 
 const { TabPane } = Tabs;
+const { confirm } = Modal;
+
+export interface ISlot {
+    name: string;
+    slotStartTme: string,
+    slotEndTme: string
+}
 
 interface IPane {
     title: string;
     key: string;
     closable: boolean;
-    slots: {
-        name: string;
-        slotStartTme: string,
-        slotEndTme: string
-    }[]
+    slots: ISlot[]
 }
 
 export function Slots() {
@@ -31,32 +34,46 @@ export function Slots() {
     };
 
     const remove = (targetKey: string) => {
-        let newActiveKey = activeKey;
-        let lastIndex = -1;
-        panes.forEach((pane, i) => {
-            if (pane.key === targetKey) {
-                lastIndex = i - 1;
+        const removeSlot = () => {
+            let newActiveKey = activeKey;
+            let lastIndex = -1;
+            panes.forEach((pane, i) => {
+                if (pane.key === targetKey) {
+                    lastIndex = i - 1;
+                }
+            });
+            const newPanes = panes.filter(pane => pane.key !== targetKey);
+            if (newPanes.length && newActiveKey === targetKey) {
+                if (lastIndex >= 0) {
+                    newActiveKey = newPanes[lastIndex].key;
+                } else {
+                    newActiveKey = newPanes[0].key;
+                }
             }
-        });
-        const newPanes = panes.filter(pane => pane.key !== targetKey);
-        if (newPanes.length && newActiveKey === targetKey) {
-            if (lastIndex >= 0) {
-                newActiveKey = newPanes[lastIndex].key;
-            } else {
-                newActiveKey = newPanes[0].key;
+            toggleSpinner(true);
+            deleteRequest({ url: `/slot/remove/${targetKey}` })
+            .then(() => {
+                toggleSpinner(false);
+                message.success("Successfully deleted slot");
+                setPanes(newPanes);
+                setActiveKey(newActiveKey);
+            })
+            .catch(() => {
+                toggleSpinner(false);
+                message.error("Couldn't delete slot");
+            });
+        };
+
+        confirm({
+            title: 'Warning',
+            icon: '',
+            content: 'Do you Want to remove this time slot ?',
+            onOk() {
+                removeSlot();
+            },
+            onCancel() {
+              console.log('Cancel');
             }
-        }
-        toggleSpinner(true);
-        deleteRequest({ url: `/slot/remove/${targetKey}` })
-        .then(() => {
-            toggleSpinner(false);
-            message.success("Successfully deleted slot");
-            setPanes(newPanes);
-            setActiveKey(newActiveKey);
-        })
-        .catch(() => {
-            toggleSpinner(false);
-            message.error("Couldn't delete slot");
         });
     };
 

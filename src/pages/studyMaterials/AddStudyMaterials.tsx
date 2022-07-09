@@ -121,18 +121,18 @@ export function AddStudyMaterials({ isOpen, handleCancel, courses }: IAddStudyMa
                         <Radio.Group>
                             <Radio.Button value="PDF">Pdf</Radio.Button>
                             <Radio.Button value="IMAGE">Image</Radio.Button>
-                            <Radio.Button value="VIDEO_URL">Video Url</Radio.Button>
+                            <Radio.Button value="VIDEO_URL">Video ID</Radio.Button>
                         </Radio.Group>
                     </Form.Item>
                     {
                         courseType === "VIDEO_URL" &&
                         <Form.Item
                             name="videoUrl"
-                            label="Video Url"
+                            label="Video ID"
                             hasFeedback
                             rules={[{
                                 required: true,
-                                message: 'Please input the video url'
+                                message: 'Please input the video ID'
                             }]}
                         >
                             <Input placeholder="Please input the video URL" />

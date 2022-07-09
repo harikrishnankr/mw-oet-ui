@@ -146,8 +146,8 @@ export default function ContactUs() {
     }, []);
 
     return (
-        <Spin spinning={loading}>
-            <section id="contact-us" className="section">
+        <section id="contact-us" className="section">
+            <Spin spinning={loading}>
                 <div className="container">
                     <h3 className="text-center section-title">Contact Us</h3>
                     <div className="row">
@@ -192,7 +192,7 @@ export default function ContactUs() {
                         </div>
                     </div>
                 </div>
-            </section>
-        </Spin>
+            </Spin>
+        </section>
     )
 }

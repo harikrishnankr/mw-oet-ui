@@ -75,9 +75,4 @@ export const MenuItems = [{
     label: "Upcoming Slots",
     access: [UserType.Student],
     url: "/app/upcoming-slots"
-}, {
-    icon: "",
-    label: "Feedback Listing",
-    access: [UserType.Student],
-    url: "/app/feedback-listing"
 }];

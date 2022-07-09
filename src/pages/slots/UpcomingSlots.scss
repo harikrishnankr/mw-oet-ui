@@ -1,0 +1,59 @@
+.events {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.events .ant-badge-status {
+  width: 100%;
+  overflow: hidden;
+  font-size: 12px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.notes-month {
+  font-size: 28px;
+  text-align: center;
+}
+
+.notes-month section {
+  font-size: 28px;
+}
+
+.Upcoming-slot__wrapper {
+  .ant-picker-calendar-mode-switch {
+    display: none;
+  }
+}
+
+.small-slot-wrapper {
+  overflow: auto;
+}
+
+.small-slot {
+  margin: 10px 0px;
+  margin-right: 10px;
+  background: #fff;
+  padding: 7px 14px;
+  border-radius: 4px;
+  min-width: 260px;
+
+  &.grey {
+    background-color: #ececec;
+  }
+
+  .status {
+    &.pending {
+      background-color: #ffcc00;
+    }
+    &.approved {
+      background-color: green;
+      color: #fff;
+    }
+    &.rejected {
+      background-color: red;
+      color: #fff;
+    }
+  }
+}

@@ -10,6 +10,16 @@ import { isMobileDevice } from "../utils";
 import "./Layout.scss";
 import { getUserType, logout } from "../services";
 import { ChangePassword } from "../../pages/auth/ChangePassword";
+import { requestFirebasePermission } from '../firebase';
+import { getMessaging, onMessage } from "firebase/messaging";
+import { postRequest } from "../apiService";
+import { EventEmitter } from "../eventEmitter";
+
+export const notificationEmitter = new EventEmitter();
+
+export const pushNotification = (data: any) => {
+    notificationEmitter.emit("onPush", data);
+};
 
 const { Content, Sider } = Layout;
 
@@ -68,9 +78,9 @@ const MenuList = ({ items, hideLogo, onClick, onActionClick }: any) => {
     const [selected, setSelected] = useState<string[]>([]);
 
     useEffect(() => {
-        const selectedRoute = items.find((i: any) => i.url === location.pathname &&  i.access.includes(currentUserType));
-        if (selectedRoute) {
-            setSelected([selectedRoute.key]);
+        const selectedRoute = items.find((i: any) => location.pathname.includes(i.url) &&  i.access.includes(currentUserType));
+        if (selectedRoute || location.pathname.includes("app/study-materials/video/")) {
+            selectedRoute?.key && setSelected([selectedRoute?.key]);
         } else {
             const baseRoute = currentUserType === UserType.Admin ? APP_BASE_ROUTE : (currentUserType === UserType.Staff ? STAFF_BASE_ROUTE : STUDENT_BASE_ROUTE);
             navigation(baseRoute);
@@ -113,6 +123,7 @@ export function LayoutWrapper() {
     const isMobile = isMobileDevice();
     const navigation = useNavigate();
     const fullWidth = window.innerWidth;
+    const [isTokenFound, setTokenFound] = useState(false);
 
     const items: MenuProps['items'] = [...MenuItems]
         .filter(menu => menu.access.includes(currentUserType))
@@ -141,6 +152,25 @@ export function LayoutWrapper() {
     const toggleModal = () => {
         toggleChangePassword((isOpen) => !isOpen);
     };
+
+    useEffect(() => {
+        if (currentUserType === UserType.Admin) {
+            requestFirebasePermission((token: string) => {
+                // console.log("Layout ::::: "+ token);
+                postRequest({ url: "/notifications/token/register", payload: { token } });
+            });
+            const messaging = getMessaging();
+            onMessage(messaging, (payload) => {
+                // console.log('Message received. Notification', payload);
+                pushNotification(payload);
+            });
+            const bc = new BroadcastChannel('test_channel');
+            bc.onmessage = event => {
+                // console.log("Broadcast channel Notifications", event.data);
+                pushNotification(event.data);
+            }
+        }
+    }, []);
 
     return (
         <div className="Layout__wrapper">

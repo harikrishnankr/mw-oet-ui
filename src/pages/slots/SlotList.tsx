@@ -20,7 +20,7 @@ interface DataType {
     name: string;
     age: number;
     address: string;
-  }
+}
 
 export function SlotList({ slots, slotId }: ISlotList) {
     const [eventList, setEventList] = useState<any[]>(slots||[]);

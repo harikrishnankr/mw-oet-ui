@@ -5,16 +5,16 @@ import "./chooseUserType.scss";
 
 import Student from "../../assets/images/student.svg";
 import Teacher from "../../assets/images/teacher.png";
+import Office from "../../assets/images/office.png";
 import { useNavigate } from "react-router";
 
 export function ChooseUserType({isOpen, accept, decline}: { isOpen: boolean; accept: () => any; decline: () => any;}) {
-
     const [userType, setUserType] = useState(UserType.Student);
     const navigate = useNavigate();
 
     const onAccept = () => {
         accept();
-        navigate(`${userType === UserType.Student ? 'student': 'staff'}/login`)
+        navigate(`${userType === UserType.Student ? 'student': userType === UserType.Staff ? 'staff' : 'admin'}/login`)
     };
 
     const onClose = (e: SyntheticEvent) => {
@@ -53,6 +53,13 @@ export function ChooseUserType({isOpen, accept, decline}: { isOpen: boolean; acc
                         <img src={Teacher} alt="Staff" />
                     </div>
                     <div className="label">Staff</div>
+                </div>
+                <div className={`Card__small ${userType === UserType.Admin ? 'select': ''}`} onClick={() => setUserType(UserType.Admin)}>
+                    <div className="radio"><div></div></div>
+                    <div className="icon">
+                        <img src={Office} alt="Office" />
+                    </div>
+                    <div className="label">Office</div>
                 </div>
                 <div className="d-flex justify-content-end">
                     <button onClick={onAccept}>Next</button>

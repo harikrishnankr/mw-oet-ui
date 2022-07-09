@@ -1,6 +1,7 @@
 import { Button, message, Table } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import React, { SyntheticEvent, useCallback, useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router";
 import { getRequest, postRequest } from "../../core/apiService";
 import { UserType } from "../../core/constants/common";
 import { Filter, FilterType, FilterWrapper } from "../../core/filterWrapper/FilterWrapper";
@@ -35,9 +36,14 @@ export function StudyMaterialsListing() {
         courseId: '',
         name: ''
     });
+    const navigation = useNavigate();
 
     const openDocument = useCallback((record: any) => (e: SyntheticEvent) => {
-        window.open(getBaseDocumentEndPoint()+record?.documentUrl)
+        if (record.type === "VIDEO_URL") {
+            navigation("video/"+record.videoUrl)
+        } else {
+            window.open(getBaseDocumentEndPoint()+record?.documentUrl);
+        }
     }, []);
 
     const columns: ColumnsType<DataType> = useMemo(() => [
