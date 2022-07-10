@@ -6,7 +6,6 @@ const isProduction = () => {
 };
 
 export const getBaseEndPoint = () => {
-    console.log(process.env);
     if (isProduction()) {
         return PRODUCTION_API_URI;
     }
