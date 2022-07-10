@@ -1,5 +1,4 @@
 import { HttpRequestHeader } from "antd/lib/upload/interface";
-import { BASE_API_ENDPOINT } from "./constants/common";
 import { getBaseEndPoint, getToken, isLoggedIn } from "./utils";
 
 export interface IPostRequest {

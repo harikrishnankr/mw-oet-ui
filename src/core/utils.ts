@@ -1,8 +1,21 @@
 import moment from "moment";
-import { DATE_FORMAT, TOKEN_KEY } from "./constants/common";
+import { DATE_FORMAT, PRODUCTION_API_URI, TOKEN_KEY } from "./constants/common";
 
-export const getBaseEndPoint = () => window.location.protocol+"//"+window.location.hostname+":3001";
-export const getBaseDocumentEndPoint = () => window.location.protocol+"//"+window.location.hostname+":3001/documents/";
+const isProduction = () => {
+    return process.env.NODE_ENV === "production";
+};
+
+export const getBaseEndPoint = () => {
+    console.log(process.env);
+    if (isProduction()) {
+        return PRODUCTION_API_URI;
+    }
+    return window.location.protocol+"//"+window.location.hostname+":3001"
+};
+export const getBaseDocumentEndPoint = () => {
+    console.log(process.env);
+    return window.location.protocol+"//"+window.location.hostname+":3001/documents/";
+}
 
 export const isMobileDevice = () => {
     return window.innerWidth < 768;
