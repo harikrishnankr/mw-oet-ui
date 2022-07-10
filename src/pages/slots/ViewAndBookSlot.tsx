@@ -3,7 +3,6 @@ import { ColumnsType } from "antd/lib/table";
 import moment, { Moment } from "moment";
 import React, { useEffect, useState } from "react";
 import { postRequest } from "../../core/apiService";
-import { DATE_FORMAT } from "../../core/constants/common";
 import { ISlot } from "./Slots";
 
 interface IViewAndBookSlot {

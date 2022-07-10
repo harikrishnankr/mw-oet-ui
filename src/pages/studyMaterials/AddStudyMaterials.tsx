@@ -1,4 +1,4 @@
-import { Button, Drawer, Form, Input, Radio, Select, Space, Upload, Modal, message, Spin } from "antd";
+import { Button, Drawer, Form, Input, Radio, Select, Space, Upload, message, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import { postRequest } from "../../core/apiService";
 import { isMobileDevice } from "../../core/utils";
@@ -139,7 +139,7 @@ export function AddStudyMaterials({ isOpen, handleCancel, courses }: IAddStudyMa
                         </Form.Item>
                     }
                     {
-                        (courseType == "PDF" || courseType == "IMAGE") &&
+                        (courseType === "PDF" || courseType === "IMAGE") &&
                         <Form.Item label="Study Material">
                             <Form.Item name="document" valuePropName="fileList"
                                 getValueFromEvent={normFile} noStyle rules={[{

@@ -1,5 +1,5 @@
 import React, { SyntheticEvent, useEffect, useMemo, useState } from "react";
-import { Button, message, Spin, Table } from "antd";
+import { Button, message, Table } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import { PageWrapper, toggleSpinner } from "../../core/PageWrapper";
 import { AddEditCourse } from "./AddEditCourse";

@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router";
 import { NavigateFunction } from "react-router-dom";
 import { TOKEN_KEY, USER_DATA } from "./constants/common";
 import { getData, isLoggedIn } from "./utils";

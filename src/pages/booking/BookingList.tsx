@@ -6,7 +6,7 @@ import moment from "moment";
 import React, { SyntheticEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { getRequest, postRequest } from "../../core/apiService";
 import { DATE_FORMAT } from "../../core/constants/common";
-import { Filter, FilterType, FilterWrapper, IFilterOptions } from "../../core/filterWrapper/FilterWrapper";
+import { Filter, FilterType, FilterWrapper } from "../../core/filterWrapper/FilterWrapper";
 import { PageWrapper, toggleSpinner } from "../../core/PageWrapper";
 import { formatDate } from "../../core/utils";
 import { BookingDetails } from "./BookingDetails";

@@ -1,8 +1,6 @@
 import { Form, Input, message, Modal, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import { postRequest } from "../../core/apiService";
-import { UserType } from "../../core/constants/common";
-import { getUserType } from "../../core/services";
 
 interface IChangePassword {
     isOpen: boolean;

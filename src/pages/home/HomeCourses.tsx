@@ -1,19 +1,11 @@
 import "./style/homeCourses.scss"
 import coursePlaceholder from "../../assets/images/courses.png";
-import whatsApp from "../../assets/images/whatsapp.svg";
-import { useNavigate } from "react-router";
-import React, { SyntheticEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getRequest } from "../../core/apiService";
 import { Carousel, message } from "antd";
 
 export default function HomeCourses() {
     const [courses, setCourses] = useState([]);
-    const navigation = useNavigate();
-
-    const goToRegister = (e: SyntheticEvent) => {
-        e.preventDefault();
-        navigation("/student/register");
-    };
 
     const getAllCourses = () => {
         getRequest({ url: "/course/get-all-course-details" })

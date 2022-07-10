@@ -1,4 +1,4 @@
-import { Drawer, Space, Spin } from "antd";
+import { Drawer } from "antd";
 import moment from "moment";
 import { DATE_FORMAT } from "../../core/constants/common";
 import { getBaseDocumentEndPoint, isMobileDevice } from "../../core/utils";

@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { getMessaging, getToken } from "firebase/messaging";
 
 var firebaseConfig = {
   apiKey: "AIzaSyDT-vNjx5qpbmtZeOZwRGEfCk_6V-Ggdas",

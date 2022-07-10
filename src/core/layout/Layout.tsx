@@ -123,7 +123,6 @@ export function LayoutWrapper() {
     const isMobile = isMobileDevice();
     const navigation = useNavigate();
     const fullWidth = window.innerWidth;
-    const [isTokenFound, setTokenFound] = useState(false);
 
     const items: MenuProps['items'] = [...MenuItems]
         .filter(menu => menu.access.includes(currentUserType))

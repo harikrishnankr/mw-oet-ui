@@ -1,5 +1,5 @@
 import { Button, Empty, message, Modal, Tabs } from "antd";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { deleteRequest, getRequest } from "../../core/apiService";
 import { PageWrapper, toggleSpinner } from "../../core/PageWrapper";
 import { isMobileDevice } from "../../core/utils";
