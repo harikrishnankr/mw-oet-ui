@@ -54,13 +54,6 @@ export function ChooseUserType({isOpen, accept, decline}: { isOpen: boolean; acc
                     </div>
                     <div className="label">Staff</div>
                 </div>
-                <div className={`Card__small ${userType === UserType.Admin ? 'select': ''}`} onClick={() => setUserType(UserType.Admin)}>
-                    <div className="radio"><div></div></div>
-                    <div className="icon">
-                        <img src={Office} alt="Office" />
-                    </div>
-                    <div className="label">Office</div>
-                </div>
                 <div className="d-flex justify-content-end">
                     <button onClick={onAccept}>Next</button>
                 </div>
