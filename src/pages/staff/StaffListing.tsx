@@ -1,4 +1,4 @@
-import { Button, message, Table } from "antd";
+import { Button, message, Modal, Table } from "antd";
 import confirm from "antd/lib/modal/confirm";
 import { ColumnsType } from "antd/lib/table";
 import React, { SyntheticEvent, useCallback, useEffect, useMemo, useState } from "react";
@@ -7,6 +7,8 @@ import { Filter, FilterType, FilterWrapper } from "../../core/filterWrapper/Filt
 import { PageWrapper, toggleSpinner } from "../../core/PageWrapper";
 import { formatDate } from "../../core/utils";
 import { AddStaff } from "./AddStaff";
+
+const { info } = Modal;
 
 interface DataType {
     key: React.Key;
@@ -58,6 +60,40 @@ export function StaffListing() {
         });
     }, []);
 
+    const showBankDetails = (staffData: any) => {
+        info({
+            title: 'Bank Details',
+            content: (
+                <>
+                    <div className="d-flex">
+                        <div className="font-weight-bold">Account Holder Name: </div>
+                        <div className="ml-2">{staffData.bankDetails.accountHolderName}</div>
+                    </div>
+                    <div className="d-flex">
+                        <div className="font-weight-bold">Account Number: </div>
+                        <div className="ml-2">{staffData.bankDetails.accountNo}</div>
+                    </div>
+                    <div className="d-flex">
+                        <div className="font-weight-bold">Bank Name: </div>
+                        <div className="ml-2">{staffData.bankDetails.bankName}</div>
+                    </div>
+                    <div className="d-flex">
+                        <div className="font-weight-bold">Branch: </div>
+                        <div className="ml-2">{staffData.bankDetails.branch}</div>
+                    </div>
+                    <div className="d-flex">
+                        <div className="font-weight-bold">IFSC: </div>
+                        <div className="ml-2">{staffData.bankDetails.ifsc}</div>
+                    </div>
+                    <div className="d-flex">
+                        <div className="font-weight-bold">UPID: </div>
+                        <div className="ml-2">{staffData.bankDetails.upiId}</div>
+                    </div>
+                </>
+            ),
+        });
+    };
+
     const columns: ColumnsType<DataType> = useMemo(() => [
         { title: 'Name', dataIndex: 'name', key: 'name' },
         { title: 'Email', dataIndex: 'email', key: 'email' },
@@ -78,6 +114,10 @@ export function StaffListing() {
                         }
                         { record.status === "APPROVED" &&
                             <a href="#" onClick={approveSuspendStaff(record, false)}>Suspend</a>
+                        }
+                        {
+                            record.bankDetails && record.bankDetails.accountNo && 
+                            <a className="ml-3" href="#" onClick={() => showBankDetails(record)}>Bank Details</a>
                         }
                     </div>
                 )

@@ -66,7 +66,7 @@ export function BookingDetails({ details, courses, isOpen, handleCancel }: IBook
                         <div style={{ borderBottom: "1px dotted #555"}}>{details?.job || "-"}</div>
                     </div>
                     <div className="col-md-6 mb-3">
-                        <div className="mb-2 font-weight-bold">Purpose of writing IELTS:</div>
+                        <div className="mb-2 font-weight-bold">Purpose of writing OET:</div>
                         <div style={{ borderBottom: "1px dotted #555"}}>{details?.purpose}</div>
                     </div>
                     <div className="col-md-6 mb-3">

@@ -74,9 +74,8 @@ export function CourseInfo({ formData, onSubmit, previous, courses }: { formData
                         <Form.Item name="purpose" label="Purpose Of Writing OET" rules={[{ required: true, message: 'Please enter the Purpose!' }]}>
                             <Radio.Group>
                                 <Space direction="vertical">
-                                    <Radio value="Study Abroad">Study Abroad - ACADEMICS</Radio>
-                                    <Radio value="PR for Canada/ Australia/ New Zealand">PR for Canada/ Australia/ New Zealand - GENERAL</Radio>
-                                    <Radio value="Work Visa for NURSES (The UK/ Australia/ New Zealand/ Ireland/ Malta/ Germany)*">Work Visa for NURSES - ACADEMICS (The UK/ Australia/ New Zealand/ Ireland/ Malta/ Germany)*</Radio>
+                                    <Radio value="Improve English Language">Improve English Language</Radio>
+                                    <Radio value="Work Visa for NURSES">Work Visa for NURSES</Radio>
                                 </Space>
                             </Radio.Group>
                         </Form.Item>

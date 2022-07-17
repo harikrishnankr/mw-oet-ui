@@ -12,7 +12,9 @@ export const getBaseEndPoint = () => {
     return window.location.protocol+"//"+window.location.hostname+":3001"
 };
 export const getBaseDocumentEndPoint = () => {
-    console.log(process.env);
+    if (isProduction()) {
+        return PRODUCTION_API_URI+"/documents/";
+    }
     return window.location.protocol+"//"+window.location.hostname+":3001/documents/";
 }
 

@@ -17,6 +17,11 @@ interface DataType {
     address: string;
     description: string;
 }
+const STATUS_OPTIONS = [
+    { label: 'All', value: '' },
+    { label: 'Approved', value: 'APPROVED'},
+    { label: 'Suspended', value: 'SUSPENDED'}
+];
 
 export function StudentListing() {
     const [students, setStudents] = useState([]);
@@ -30,7 +35,8 @@ export function StudentListing() {
         page: 1,
         studentName: '',
         startDate: null,
-        endDate: null
+        endDate: null,
+        status: ''
     });
     const disabledDate: RangePickerProps['disabledDate'] = current => current && current > moment().endOf('day');
 
@@ -47,7 +53,7 @@ export function StudentListing() {
                 e.preventDefault();
                 postRequest({ url: `/student/approve-materials/${record.id}`, payload: { approve: access } })
                     .then(() => {
-                        getStudentListing();
+                        getStudentListing(filter);
                         message.success(` ${access ? 'Approved' : 'Revoke'} study materials successfully!`);
                         toggleSpinner(false);
                     })
@@ -60,7 +66,38 @@ export function StudentListing() {
               console.log('Cancel');
             }
         });
-    }, []);
+    }, [filter]);
+
+    const updateStudentStatus = useCallback((record: any, suspend: boolean) => {
+        const currentFilter = filter;
+        return (e: SyntheticEvent) => {
+            e.preventDefault();
+            confirm({
+                title: 'Warning!',
+                content: `Are you sure you want to ${suspend ? 'Suspend' : 'Reinstate'} this Student`,
+                okText: 'Yes',
+                okType: 'primary',
+                cancelText: 'No',
+                onOk() {
+                    toggleSpinner(true);
+                    e.preventDefault();
+                    postRequest({ url: `/student/update-status/${record.id}`, payload: { suspend } })
+                        .then(() => {
+                            getStudentListing(currentFilter);
+                            message.success(`${suspend ? 'Suspend' : 'Reinstate'} student successfully!`);
+                            toggleSpinner(false);
+                        })
+                        .catch((err) => {
+                            message.success(err.message);
+                            toggleSpinner(false);
+                        });
+                },
+                onCancel() {
+                console.log('Cancel');
+                }
+            });
+        }
+    }, [filter]);
 
     const columns: ColumnsType<DataType> = useMemo(() => [
         { title: 'Name', dataIndex: 'fullName', key: 'fullName' },
@@ -86,8 +123,27 @@ export function StudentListing() {
                     </div>
                 )
             },
+        },
+        {
+            title: '',
+            dataIndex: '',
+            key: 'x',
+            fixed: 'right',
+            width: 200,
+            render: (text: any, record: any) => {
+                return (
+                    <div className="d-flex">
+                        { record.status === "SUSPENDED" && 
+                            <a href="#" onClick={updateStudentStatus(record, false)}>Reinstate</a>
+                        }
+                        { record.status === "APPROVED" && 
+                            <a href="#" onClick={updateStudentStatus(record, true)}>Suspend</a>
+                        }
+                    </div>
+                )
+            }
         }
-    ], []);
+    ], [filter]);
 
     const onPageChange = (pagination: any) => {
         setFilter((f) => ({
@@ -111,24 +167,24 @@ export function StudentListing() {
         }
     }, []);
 
-    const getStudentListing = () => {
-        if ((filter.startDate || filter.endDate) && (!filter.startDate || !filter.endDate)) {
+    const getStudentListing = (currentFilter: any) => {
+        if ((currentFilter.startDate || currentFilter.endDate) && (!currentFilter.startDate || !currentFilter.endDate)) {
             return;
         }
         toggleSpinner(true);
         postRequest({
             url: "/student/approved-list",
             payload: {
-                ...filter,
-                startDate: filter.startDate ? moment(filter.startDate).format("YYYY-MM-DDT00:00:00.000Z") : null,
-                endDate: filter.endDate ? moment(filter.endDate).format("YYYY-MM-DDT23:59:59.000Z") : null
+                ...currentFilter,
+                startDate: currentFilter.startDate ? moment(currentFilter.startDate).format("YYYY-MM-DDT00:00:00.000Z") : null,
+                endDate: currentFilter.endDate ? moment(currentFilter.endDate).format("YYYY-MM-DDT23:59:59.000Z") : null
             }
         })
         .then((res) => {
             toggleSpinner(false);
             setStudents(res.data.docs.map((d: any) => ({ ...d, key: d._id, createdDate: formatDate(d.createdDate) })));
             setPaginationConfig((c: any) => ({
-                current: filter.page,
+                current: currentFilter.page,
                 pageSize: 10,
                 total: res.data.totalDocs
             }));
@@ -140,12 +196,14 @@ export function StudentListing() {
     };
 
     useEffect(() => {
-        getStudentListing();
+        getStudentListing(filter);
     }, [filter]);
 
     return (
         <PageWrapper title="Students" subTitle="View and Approve Students">
             <FilterWrapper>
+                <Filter name="status" type={FilterType.RadioGroup} radioOptions={STATUS_OPTIONS}
+                    value={filter.status} onChange={handleInputChange} label="Status"/>
                 <Filter name="studentName" type={FilterType.Input} value={filter.studentName}
                     onChange={handleInputChange} placeholder="Student Name" label="Student Name"/>
                 <Filter name="startDate" type={FilterType.DatePicker} value={filter.startDate} label="Start Date"
