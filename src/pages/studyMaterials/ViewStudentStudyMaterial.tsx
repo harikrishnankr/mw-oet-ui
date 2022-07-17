@@ -5,11 +5,13 @@ import { StudyMaterialsListing } from "./StudyMaterialsListing";
 
 export default function ViewStudentStudyMaterial() {
     const [hasAccess, setAccess] = useState(false);
+    const [courseId, setCourseId] = useState('');
 
     useEffect(() => {
         getRequest({ url: "/study-materials/has-access" })
         .then((res: any) => {
             setAccess(res?.data?.hasAccessToStudyMaterials);
+            setCourseId(res?.data?.courseType);
         })
         .catch((err: any) => {
             message.error(err?.message||"Couldn't fetch study material access settings.");
@@ -33,7 +35,7 @@ export default function ViewStudentStudyMaterial() {
             }
             {
                 hasAccess &&
-                <StudyMaterialsListing />
+                <StudyMaterialsListing courseId={courseId} />
             }
         </>
     );

@@ -5,7 +5,8 @@ import {
     Button,
     Radio,
     DatePicker,
-    Upload
+    Upload,
+    message
 } from 'antd';
 import moment from 'moment';
 import { DATE_FORMAT } from '../../core/constants/common';
@@ -73,6 +74,17 @@ export function PersonalInfo({ formData, onSubmit }: { formData: IPersonalInfo, 
             </Select>
         </Form.Item>
     );
+
+    const beforeUpload = (file: File) => {
+        const maxFileSize = 1024*3*1024; //3MB
+        const isAllowed = file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'application/pdf';
+        if (!isAllowed) {
+          message.error(`${file.name} is not a png/jpeg/jpg/pdf file`);
+        } else if (maxFileSize < file.size) {
+            message.error(`${file.name} should be under 3MB file size`);
+        }
+        return (!isAllowed || maxFileSize < file.size) ? Upload.LIST_IGNORE : false;
+    };
 
     return (
         <Form
@@ -160,7 +172,7 @@ export function PersonalInfo({ formData, onSubmit }: { formData: IPersonalInfo, 
                     <div className="col-md-8">
                         <Form.Item label="Upload an Identification and Address Proof">
                             <Form.Item label="Upload an Identification and Address Proof" name="idProof" valuePropName="fileList" getValueFromEvent={normFile} noStyle rules={[{ required: true, message: 'Please enter the Please enter the ID Proof!' }]}>
-                                <Upload.Dragger name="files" beforeUpload={() => false} maxCount={1}>
+                                <Upload.Dragger name="files" beforeUpload={beforeUpload} maxCount={1}>
                                     <p className="ant-upload-text">Click or drag file to this area to upload</p>
                                     <p className="ant-upload-hint">Support for a single or bulk upload.</p>
                                 </Upload.Dragger>

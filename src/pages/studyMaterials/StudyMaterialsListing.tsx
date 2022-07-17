@@ -19,7 +19,7 @@ interface DataType {
     document?: string;
 }
 
-export function StudyMaterialsListing() {
+export function StudyMaterialsListing(props: {courseId?: string}) {
     const currentUserRole = getUserType();
     const [courses, setCourses] = useState<{ label: string; value: string; }[]>([]);
     const [studyMaterials, setStudyMaterials] = useState([]);
@@ -33,7 +33,7 @@ export function StudyMaterialsListing() {
     const [filter, setFilter] = useState({
         limit: 10,
         page: 1,
-        courseId: '',
+        courseId: props.courseId||'',
         name: ''
     });
     const navigation = useNavigate();
@@ -117,7 +117,9 @@ export function StudyMaterialsListing() {
     }, [filter]);
 
     useEffect(() => {
-        getAllCourses();
+        if (!props.courseId) {
+            getAllCourses();
+        }
     }, []);
 
     const onPageChange = (pagination: any) => {
@@ -158,9 +160,12 @@ export function StudyMaterialsListing() {
             <Button type="primary" key="1" onClick={onAdd}>Add Material</Button>
         ] : []}>
             <FilterWrapper>
-                <Filter name="courseId" type={FilterType.RadioGroup} radioOptions={courses}
-                    value={filter.courseId} onChange={handleInputChange} label="Course Type"
-                />
+                {
+                    !props.courseId &&
+                    <Filter name="courseId" type={FilterType.RadioGroup} radioOptions={courses}
+                        value={filter.courseId} onChange={handleInputChange} label="Course Type"
+                    />
+                }
                 <Filter name="name" type={FilterType.Input} placeholder="Search Material"
                     value={filter.name} onChange={handleInputChange} label="Material Name"
                 />
