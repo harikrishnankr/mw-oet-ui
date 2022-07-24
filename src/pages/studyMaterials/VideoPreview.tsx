@@ -4,7 +4,7 @@ import { PageWrapper } from "../../core/PageWrapper";
 import { useNavigate, useParams } from "react-router";
 import { Alert, Button } from "antd";
 
-export default function VideoPreview(props: any) {
+export default function VideoPreview() {
     const params = useParams();
     const [mediaId, setMediaId] = useState("");
     const navigation = useNavigate();
@@ -17,7 +17,7 @@ export default function VideoPreview(props: any) {
 
     return (
         <PageWrapper title="Video Material" subTitle={"Preview Video Materials"} actions={[
-            <Button type="primary" ghost onClick={backToStudyMaterial}>Back</Button>
+            <Button type="primary" ghost onClick={backToStudyMaterial} key="button-1">Back</Button>
         ]} >
             <div style={{position:"relative", overflow:"hidden", width: "100%", height: "100%"}}>
                 { mediaId && <JWPlayer mediaId={mediaId as string}/> }

@@ -2,13 +2,14 @@ import { Button, message, Table } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import React, { SyntheticEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
-import { getRequest, postRequest } from "../../core/apiService";
+import { deleteRequest, getRequest, postRequest } from "../../core/apiService";
 import { UserType } from "../../core/constants/common";
 import { Filter, FilterType, FilterWrapper } from "../../core/filterWrapper/FilterWrapper";
 import { PageWrapper, toggleSpinner } from "../../core/PageWrapper";
 import { getUserType } from "../../core/services";
 import { formatDate, getBaseDocumentEndPoint, isMobileDevice } from "../../core/utils";
 import { AddStudyMaterials } from "./AddStudyMaterials";
+import confirm from "antd/lib/modal/confirm";
 
 interface DataType {
     key: React.Key;
@@ -46,6 +47,34 @@ export function StudyMaterialsListing(props: {courseId?: string}) {
         }
     }, []);
 
+    const deleteDocument = useCallback((record: any) => (e: SyntheticEvent) => {
+        e.preventDefault();
+        confirm({
+            title: 'Warning!',
+            content: 'Are you sure you want to delete this Study material',
+            okText: 'Yes',
+            okType: 'primary',
+            cancelText: 'No',
+            onOk() {
+                toggleSpinner(true);
+                e.preventDefault();
+                deleteRequest({ url: `/study-materials/${record.id}`, payload: {} })
+                    .then(() => {
+                        getStudyMaterialListing();
+                        message.success(record.name + " Deleted successfully!");
+                        toggleSpinner(false);
+                    })
+                    .catch((err) => {
+                        message.error(err.message);
+                        toggleSpinner(false);
+                    });
+            },
+            onCancel() {
+              console.log('Cancel');
+            }
+        });
+    }, [filter]);
+
     const columns: ColumnsType<DataType> = useMemo(() => [
         { title: 'Name', dataIndex: 'name', key: 'name' },
         { title: 'Type', dataIndex: 'type', key: 'type' },
@@ -60,11 +89,15 @@ export function StudyMaterialsListing(props: {courseId?: string}) {
                 return (
                     <div className="d-flex">
                         <a href="#" onClick={openDocument(record)}>Preview</a>
+                        {
+                            currentUserRole === UserType.Admin &&
+                            <a href="#" className="text-danger ml-3" onClick={deleteDocument(record)}>Delete</a>
+                        }
                     </div>
                 )
             }
         }
-    ], []);
+    ], [filter]);
     
     const getAllCourses = () => {
         toggleSpinner(true);

@@ -88,7 +88,7 @@ export function StudentListing() {
                             toggleSpinner(false);
                         })
                         .catch((err) => {
-                            message.success(err.message);
+                            message.error(err.message);
                             toggleSpinner(false);
                         });
                 },
