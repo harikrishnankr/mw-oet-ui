@@ -6,13 +6,15 @@ import { APP_BASE_ROUTE, STAFF_BASE_ROUTE, STUDENT_BASE_ROUTE, UserType } from "
 import LogoWhite from "../../assets/images/logo.png";
 import UserWhite from "../../assets/images/user.png";
 import Ham from "../../assets/images/ham.png";
+import ChangePasswordImage from "../../assets/images/changePassword.svg";
+import LogoutImage from "../../assets/images/logout.svg";
 import { isMobileDevice } from "../utils";
 import "./Layout.scss";
 import { getUserType, logout } from "../services";
 import { ChangePassword } from "../../pages/auth/ChangePassword";
-import { requestFirebasePermission } from '../firebase';
-import { getMessaging, onMessage } from "firebase/messaging";
-import { postRequest } from "../apiService";
+// import { requestFirebasePermission } from '../firebase';
+// import { getMessaging, onMessage } from "firebase/messaging";
+// import { postRequest } from "../apiService";
 import { EventEmitter } from "../eventEmitter";
 
 export const notificationEmitter = new EventEmitter();
@@ -36,10 +38,12 @@ const MobileHeader = ({openDrawer, onActionClick}: any) => {
             {
               label: "Change Password",
               key: 'CHANGE_PASSWORD',
+              icon: <img src={ChangePasswordImage} className="side-menu-icon"/>
             },
             {
               label: "Logout",
               key: 'LOGOUT',
+              icon: <img src={LogoutImage} className="side-menu-icon"/>
             }
           ]}
           onClick={(value) => onActionClick(value.key)}
@@ -106,9 +110,11 @@ const MenuList = ({ items, hideLogo, onClick, onActionClick }: any) => {
             <Menu theme="light" mode="inline" selectedKeys={selected} items={items} onClick={onMenuClick}/>
             <ul className="ant-menu ant-menu-inline ant-menu-root Settings__menu">
                 <li className="ant-menu-item ant-menu-item-only-child Settings__item">
+                    <img src={ChangePasswordImage} className="side-menu-icon ant-menu-item-icon" />
                     <span className="ant-menu-title-content" onClick={() => onActionClick("CHANGE_PASSWORD")}>Change Password</span>
                 </li>
                 <li className="ant-menu-item ant-menu-item-only-child Settings__item">
+                    <img src={LogoutImage} className="side-menu-icon ant-menu-item-icon" />
                     <span className="ant-menu-title-content" onClick={() => onActionClick("LOGOUT")}>Logout</span>
                 </li>
             </ul>
@@ -129,7 +135,7 @@ export function LayoutWrapper() {
         .map((menu, index) => {
             return {
                 key: String(index + 1),
-                icon: null,
+                icon: menu.icon,
                 label: menu.label,
                 url :menu.url,
                 access: menu.access
@@ -154,20 +160,20 @@ export function LayoutWrapper() {
 
     useEffect(() => {
         if (currentUserType === UserType.Admin) {
-            requestFirebasePermission((token: string) => {
-                // console.log("Layout ::::: "+ token);
-                postRequest({ url: "/notifications/token/register", payload: { token } });
-            });
-            const messaging = getMessaging();
-            onMessage(messaging, (payload) => {
-                // console.log('Message received. Notification', payload);
-                pushNotification(payload);
-            });
-            const bc = new BroadcastChannel('test_channel');
-            bc.onmessage = event => {
-                // console.log("Broadcast channel Notifications", event.data);
-                pushNotification(event.data);
-            }
+            // requestFirebasePermission((token: string) => {
+            //     // console.log("Layout ::::: "+ token);
+            //     postRequest({ url: "/notifications/token/register", payload: { token } });
+            // });
+            // const messaging = getMessaging();
+            // onMessage(messaging, (payload) => {
+            //     // console.log('Message received. Notification', payload);
+            //     pushNotification(payload);
+            // });
+            // const bc = new BroadcastChannel('test_channel');
+            // bc.onmessage = event => {
+            //     // console.log("Broadcast channel Notifications", event.data);
+            //     pushNotification(event.data);
+            // }
         }
     }, []);
 

@@ -97,3 +97,16 @@ p {
 .savefrom__vimeo_links {
     display: none !important;
 }
+
+.side-menu-icon {
+    width: 20px;
+    filter: invert(38%) sepia(7%) saturate(327%) hue-rotate(169deg) brightness(96%) contrast(89%);
+}
+
+.ant-menu-item {
+    &.ant-menu-item-selected {
+        .side-menu-icon {
+            filter: invert(41%) sepia(59%) saturate(2145%) hue-rotate(190deg) brightness(100%) contrast(101%) !important;
+        }
+    }
+}

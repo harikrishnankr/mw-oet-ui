@@ -10,4 +10,4 @@ export const APP_BASE_ROUTE = "/app/booking";
 export const STAFF_BASE_ROUTE = "/app/leave-requests";
 export const STUDENT_BASE_ROUTE = "/app/view-study-materials";
 export const JW_PLAYER_LIBRARY = "https://cdn.jwplayer.com/libraries/arOgyp1G.js";
-export const PRODUCTION_API_URI = "https://manglishworldoet.com/api";
+export const PRODUCTION_API_URI = "http://64.227.177.105/api";
