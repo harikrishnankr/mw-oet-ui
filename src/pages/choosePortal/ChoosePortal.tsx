@@ -4,14 +4,12 @@ import onlineAcademy from "../../assets/images/online-academy.png"
 
 import "./ChoosePortal.scss";
 import { useNavigate } from "react-router-dom";
-import { PORTAL_NAME } from "../../core/constants/common";
 
 export function ChoosePortal() {
 
     const navigation = useNavigate();
 
     const choose = (route: string) => {
-        sessionStorage.setItem(PORTAL_NAME, route);
         navigation(route);
     };
 
