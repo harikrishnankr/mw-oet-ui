@@ -6,7 +6,7 @@ export const logout = (navigation: NavigateFunction) => {
     if (isLoggedIn()) {
         localStorage.removeItem(TOKEN_KEY);
         localStorage.removeItem(USER_DATA);
-        navigation("/");
+        navigation("/online-academy");
     }
 };
 

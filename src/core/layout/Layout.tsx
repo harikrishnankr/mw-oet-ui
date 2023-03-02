@@ -38,12 +38,12 @@ const MobileHeader = ({openDrawer, onActionClick}: any) => {
             {
               label: "Change Password",
               key: 'CHANGE_PASSWORD',
-              icon: <img src={ChangePasswordImage} className="side-menu-icon"/>
+              icon: <img src={ChangePasswordImage} alt="Change Password" className="side-menu-icon"/>
             },
             {
               label: "Logout",
               key: 'LOGOUT',
-              icon: <img src={LogoutImage} className="side-menu-icon"/>
+              icon: <img src={LogoutImage} alt="Logout" className="side-menu-icon"/>
             }
           ]}
           onClick={(value) => onActionClick(value.key)}

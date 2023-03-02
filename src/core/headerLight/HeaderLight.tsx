@@ -12,7 +12,7 @@ export function HeaderLight(props: IHeaderLight) {
 
     const goHome = (e: SyntheticEvent) => {
         e.preventDefault();
-        navigation("/");
+        navigation("/online-academy");
     };
 
     return (

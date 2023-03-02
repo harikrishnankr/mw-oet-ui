@@ -34,6 +34,7 @@
     "start": "react-scripts start",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "deployToProduction": "scp -r ./build/* root@64.227.177.105:/var/www/manglishworld/html",
+    "loginToServer": "ssh -i ~/.ssh/id_rsa root@64.227.177.105",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "startInProduction": "pm2 start serve -- -s /var/www/manglishworld/html"

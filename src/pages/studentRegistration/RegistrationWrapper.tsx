@@ -100,7 +100,7 @@ export function RegistrationWrapper() {
                 top: 0,
                 behavior: "smooth"
             });
-            navigation("/");
+            navigation("/online-academy");
         }).catch((err) => {
             Modal.error({
                 title: "Error!",

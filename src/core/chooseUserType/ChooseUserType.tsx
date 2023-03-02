@@ -5,7 +5,6 @@ import "./chooseUserType.scss";
 
 import Student from "../../assets/images/student.svg";
 import Teacher from "../../assets/images/teacher.png";
-import Office from "../../assets/images/office.png";
 import { useNavigate } from "react-router";
 
 export function ChooseUserType({isOpen, accept, decline}: { isOpen: boolean; accept: () => any; decline: () => any;}) {
@@ -14,7 +13,7 @@ export function ChooseUserType({isOpen, accept, decline}: { isOpen: boolean; acc
 
     const onAccept = () => {
         accept();
-        navigate(`${userType === UserType.Student ? 'student': userType === UserType.Staff ? 'staff' : 'admin'}/login`)
+        navigate(`${userType === UserType.Student ? '/student': userType === UserType.Staff ? '/staff' : '/admin'}/login`)
     };
 
     const onClose = (e: SyntheticEvent) => {

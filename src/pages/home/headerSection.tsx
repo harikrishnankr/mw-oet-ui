@@ -52,7 +52,7 @@ export default function HeaderSection({ isSticky, selectedId }: IHeader) {
                         <div className="row">
                             <div className="col-lg-12">
                                 <nav className="navbar navbar-expand-lg">
-                                    <a className="navbar-brand" href="/">
+                                    <a className="navbar-brand" href="/online-academy">
                                         <img src={logo} alt="Logo" />
                                     </a>
                                     <button className={`navbar-toggler ${isNavbarOpen ? 'active' : ''}`} type="button" onClick={onHamburgerClick}>
