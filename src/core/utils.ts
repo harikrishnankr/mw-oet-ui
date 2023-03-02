@@ -7,13 +7,14 @@ const isProduction = () => {
 
 export const getBaseEndPoint = () => {
     if (isProduction()) {
-        return PRODUCTION_API_URI;
+        return window.location.protocol + '//' + window.location.host + '/api';
     }
     return window.location.protocol+"//"+window.location.hostname+":3001"
 };
+
 export const getBaseDocumentEndPoint = () => {
     if (isProduction()) {
-        return PRODUCTION_API_URI+"/documents/";
+        return window.location.protocol + '//' + window.location.host+"/api/documents/";
     }
     return window.location.protocol+"//"+window.location.hostname+":3001/documents/";
 }

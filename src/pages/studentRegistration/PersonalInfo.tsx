@@ -56,7 +56,6 @@ export function PersonalInfo({ formData, onSubmit }: { formData: IPersonalInfo, 
     const prefixSelector = (
         <Form.Item name="prefix" noStyle>
             <Select
-                style={{ width: 100 }}
                 dropdownMatchSelectWidth={false}
                 showSearch
                 optionLabelProp="label"

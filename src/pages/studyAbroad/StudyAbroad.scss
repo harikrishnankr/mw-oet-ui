@@ -1,0 +1,46 @@
+#study-abroad {
+    height: 100%;
+    .nav-logo {
+        img {
+            width: 150px;
+        }
+    }
+
+    .cs-wrapper {
+        height: calc(100% - 110px);
+
+        .row {
+            height: 100%;
+        }
+
+        .col-lg-12 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+    }
+    
+    .coming-soon-text {
+        .sa {
+            color: #4a4a4a;
+            font-size: 40px;
+            font-weight: 600;
+            font-family: poppins, sans-serif;
+        }
+
+        .cs {
+            color: #4a4a4a;
+            font-size: 30px;
+            font-weight: 600;
+            font-family: poppins, sans-serif;
+        }
+    }
+
+    .coming-soon-img {
+        img {
+            width: 100%;
+            max-width: 650px;
+        }
+    }
+}

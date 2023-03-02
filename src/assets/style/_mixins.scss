@@ -1,6 +1,6 @@
 @mixin build-utility-class($prefix, $suffix, $attribute, $value) {
     .#{$prefix}-#{$suffix} {
-        #{$attribute}: $value;
+        #{$attribute}: $value !important;
     }
 }
 
