@@ -1,7 +1,6 @@
 import React, { lazy } from 'react';
 import { Route, Routes } from "react-router";
 import { routes } from './AppRoutes';
-import { LayoutWrapper } from './core/layout/Layout';
 import { Loading } from './core/loading';
 import PrivateRoute from './core/PrivateRoute';
 
@@ -13,6 +12,7 @@ const AdminLoginAsync = lazy(() => import("./pages/auth/AdminLogin"));
 const StudentLoginAsync = lazy(() => import("./pages/auth/StudentLogin"));
 const StaffLoginAsync = lazy(() => import("./pages/auth/StaffLogin"));
 const StudyAbroadAsync = lazy(() => import("./pages/studyAbroad"));
+const LayoutWrapper = lazy(() => import("./core/layout"));
 
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
         <Route path="/admin/login" element={<Loading> <AdminLoginAsync /> </Loading>} />
         <Route path="/student/login" element={<Loading> <StudentLoginAsync /> </Loading>} />
         <Route path="/staff/login" element={<Loading> <StaffLoginAsync /> </Loading>} />
-        <Route path="/app" element={<PrivateRoute> <LayoutWrapper /> </PrivateRoute>}>
+        <Route path="/app" element={<PrivateRoute lazy> <LayoutWrapper /> </PrivateRoute>}>
           {
             routes.map((route) => (
               <Route key={route.key} path={route.path} element={(
