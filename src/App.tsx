@@ -11,16 +11,13 @@ const StudentRegistration = lazy(() => import("./pages/studentRegistration"));
 const AdminLoginAsync = lazy(() => import("./pages/auth/AdminLogin"));
 const StudentLoginAsync = lazy(() => import("./pages/auth/StudentLogin"));
 const StaffLoginAsync = lazy(() => import("./pages/auth/StaffLogin"));
-const StudyAbroadAsync = lazy(() => import("./pages/studyAbroad"));
 const LayoutWrapper = lazy(() => import("./core/layout"));
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Loading> <ChoosePortalAsync /> </Loading>} />
-        <Route path="/study-abroad" element={<Loading> <StudyAbroadAsync /> </Loading>} />
-        <Route path="/online-academy" element={<Loading> <HomeAsync /> </Loading>} />
+        <Route path="/" element={<Loading> <HomeAsync /> </Loading>} />
         <Route path="/student/register" element={<Loading> <StudentRegistration /> </Loading>} />
         <Route path="/admin/login" element={<Loading> <AdminLoginAsync /> </Loading>} />
         <Route path="/student/login" element={<Loading> <StudentLoginAsync /> </Loading>} />

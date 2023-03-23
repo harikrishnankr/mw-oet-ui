@@ -72,13 +72,13 @@ export function RegistrationWrapper() {
         const payload = new FormData();
         const questions: { type: string; question: any; answer: any; }[] = [];
         Object.keys(data).forEach((name: string) => {
-            if ( name === "dob") {
+            if (name === "dob") {
                 payload.append(name, data[name as keyof typeof data].format());
-            } else if ( name === "idProof" ) {
+            } else if (name === "idProof") {
                 payload.append(name, data[name as keyof typeof data][0].originFileObj);
-            } else if ( name === "phone" ) {
+            } else if (name === "phone") {
                 payload.append(name, `${data.prefix}-${data[name as keyof typeof data]}`);
-            } else if ( name !== "prefix" ) {
+            } else if (name !== "prefix") {
                 payload.append(name, data[name as keyof typeof data]);
             }
         });
@@ -100,7 +100,7 @@ export function RegistrationWrapper() {
                 top: 0,
                 behavior: "smooth"
             });
-            navigation("/online-academy");
+            navigation("/");
         }).catch((err) => {
             Modal.error({
                 title: "Error!",
@@ -111,12 +111,12 @@ export function RegistrationWrapper() {
 
     useEffect(() => {
         getRequest({ url: "/course/getAll", skipAuth: true })
-        .then((res: any) => {
-            setCourses(res.data);
-        })
-        .catch(() => {
-            message.error("Couldn't fetch course list. Please try reloading the page!")
-        });
+            .then((res: any) => {
+                setCourses(res.data);
+            })
+            .catch(() => {
+                message.error("Couldn't fetch course list. Please try reloading the page!")
+            });
     }, []);
 
     useEffect(() => {
@@ -138,7 +138,7 @@ export function RegistrationWrapper() {
             ...f,
             courseInfo: value
         }));
-        setFormStatus((s) =>({
+        setFormStatus((s) => ({
             ...s,
             courseInfo: FormStatus.Success,
             assessment: FormStatus.Pending
@@ -151,7 +151,7 @@ export function RegistrationWrapper() {
             ...f,
             assessment: value
         }));
-        setFormStatus((s) =>({
+        setFormStatus((s) => ({
             ...s,
             courseInfo: FormStatus.Success,
             assessment: FormStatus.Success
@@ -173,17 +173,17 @@ export function RegistrationWrapper() {
                         className="site-navigation-steps"
                         responsive={false}
                     >
-                        <Step status={getCurrentStatus(0)} title={!isMobile ? "Personal Information" : "" } />
-                        <Step status={getCurrentStatus(1)} title={!isMobile ? "Course Information" : "" }
-                            disabled={formStatus.courseInfo === FormStatus.Pending}/>
-                        <Step status={getCurrentStatus(2)} title={!isMobile ? "Assessment" : "" }
+                        <Step status={getCurrentStatus(0)} title={!isMobile ? "Personal Information" : ""} />
+                        <Step status={getCurrentStatus(1)} title={!isMobile ? "Course Information" : ""}
+                            disabled={formStatus.courseInfo === FormStatus.Pending} />
+                        <Step status={getCurrentStatus(2)} title={!isMobile ? "Assessment" : ""}
                             disabled={formStatus.assessment === FormStatus.Pending}
                         />
                     </Steps>
                     <div className="steps-content">
-                        { current === 0 && <PersonalInfo formData={formData.personalInfo} onSubmit={onPersonalInfoSubmit}/> }
-                        { current === 1 && <CourseInfo formData={formData.courseInfo} onSubmit={onCourseInfoSubmit} previous={goToPersonalInfo} courses={courses}/> }
-                        { current === 2 && <Assessment formData={formData.assessment} onSubmit={onAssessmentSubmit} previous={goToCourseInfo} /> }
+                        {current === 0 && <PersonalInfo formData={formData.personalInfo} onSubmit={onPersonalInfoSubmit} />}
+                        {current === 1 && <CourseInfo formData={formData.courseInfo} onSubmit={onCourseInfoSubmit} previous={goToPersonalInfo} courses={courses} />}
+                        {current === 2 && <Assessment formData={formData.assessment} onSubmit={onAssessmentSubmit} previous={goToCourseInfo} />}
                     </div>
                 </div>
             </HeaderLight>
