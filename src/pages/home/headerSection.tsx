@@ -52,7 +52,7 @@ export default function HeaderSection({ isSticky, selectedId }: IHeader) {
                         <div className="row">
                             <div className="col-lg-12">
                                 <nav className="navbar navbar-expand-lg">
-                                    <a className="navbar-brand" href="/online-academy">
+                                    <a className="navbar-brand" href="/">
                                         <img src={logo} alt="Logo" />
                                     </a>
                                     <button className={`navbar-toggler ${isNavbarOpen ? 'active' : ''}`} type="button" onClick={onHamburgerClick}>
@@ -97,12 +97,12 @@ export default function HeaderSection({ isSticky, selectedId }: IHeader) {
                                     </h2>
                                     <p>
                                         Learn from the best tutors at the comfort of your home.
-                                </p>
+                                    </p>
                                     <div className="header-button">
                                         <a onClick={navigateToRegister} href="/#/" rel="nofollow" className="btn btn-border-filled">Register</a>
                                         <a onClick={navigateToLogin} href="/#/" className="btn btn-border page-scroll">
                                             Student Login
-                                    </a>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
