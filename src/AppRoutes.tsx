@@ -13,6 +13,8 @@ const SlotsAsync = lazy(() => import("./pages/slots"));
 const UpcomingSlotsAsync = lazy(() => import("./pages/slots/UpcomingSlots"));
 const NotificationsAsync = lazy(() => import("./pages/notifications"));
 const VideoPreviewAsync = lazy(() => import("./pages/studyMaterials/VideoPreview"));
+const ResultAndTestimonialsAsync = lazy(() => import("./pages/resultAndTestimonials"));
+const StudyAbroadBookingAsync = lazy(() => import("./pages/studyAbroad"));
 
 export const routes = [{
     key: 1,
@@ -102,6 +104,18 @@ export const routes = [{
     key: 15,
     path: "/app/view-study-materials/video/:mediaId",
     component: <VideoPreviewAsync />,
+    private: true,
+    lazy: true
+}, {
+    key: 16,
+    path: "/app/result-testimonials",
+    component: <ResultAndTestimonialsAsync />,
+    private: true,
+    lazy: true
+}, {
+    key: 17,
+    path: "/app/study-abroad-booking",
+    component: <StudyAbroadBookingAsync />,
     private: true,
     lazy: true
 }];

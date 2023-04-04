@@ -19,7 +19,8 @@ interface DataType {
     description: string;
 }
 
-export function BookingList() {const [isModalOpen, toggleModal] = useState<boolean>(false);
+export function BookingList() {
+    const [isModalOpen, toggleModal] = useState<boolean>(false);
     const [bookings, setBookings] = useState<DataType[]>([]);
     const [courses, setCourses] = useState([]);
     const [filter, setFilter] = useState({

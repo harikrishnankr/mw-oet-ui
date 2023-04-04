@@ -26,6 +26,7 @@ export class EventEmitter {
     emit(name: string, data: any) {
         if (!this._events[name]) {
             throw new Error(`Can't emit an event. Event "${name}" doesn't exits.`);
+            // return;
         }
     
         const fireCallbacks = (callback: (t: any) => any) => {
