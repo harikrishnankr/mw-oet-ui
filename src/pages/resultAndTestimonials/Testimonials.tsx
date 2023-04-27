@@ -138,7 +138,7 @@ function AddEditReview({ isOpen, handleCancel }: IAddEditReview) {
                                 name="review"
                                 rules={[{ required: true, message: 'Please input the Review!' }]}
                             >
-                                <Input.TextArea maxLength={1000}/>
+                                <Input.TextArea maxLength={2000}/>
                             </Form.Item>
                             <Form.Item label="Profile Picture">
                                 <Form.Item label="Upload an Identification and Address Proof" name="profile" valuePropName="fileList" getValueFromEvent={normFile} noStyle rules={[{ required: true, message: 'Profile Picture is required!' }]}>
