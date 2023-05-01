@@ -20,6 +20,11 @@ export const MenuItems = [{
     url: "/app/study-abroad-booking"
 },{
     icon: <img src={bookingImage} alt="ICON" className="side-menu-icon"/>,
+    label: "Immigration Bookings",
+    access: [UserType.Admin, UserType.Staff],
+    url: "/app/immigration-booking"
+}, {
+    icon: <img src={bookingImage} alt="ICON" className="side-menu-icon"/>,
     label: "IELTS/Spoken Bookings",
     access: [UserType.Admin],
     url: "/app/booking"

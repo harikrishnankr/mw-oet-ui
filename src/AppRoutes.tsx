@@ -15,6 +15,7 @@ const NotificationsAsync = lazy(() => import("./pages/notifications"));
 const VideoPreviewAsync = lazy(() => import("./pages/studyMaterials/VideoPreview"));
 const ResultAndTestimonialsAsync = lazy(() => import("./pages/resultAndTestimonials"));
 const StudyAbroadBookingAsync = lazy(() => import("./pages/studyAbroad"));
+const ImmigrationBookingAsync = lazy(() => import("./pages/Immigrations"));
 
 export const routes = [{
     key: 1,
@@ -116,6 +117,12 @@ export const routes = [{
     key: 17,
     path: "/app/study-abroad-booking",
     component: <StudyAbroadBookingAsync />,
+    private: true,
+    lazy: true
+}, {
+    key: 18,
+    path: "/app/immigration-booking",
+    component: <ImmigrationBookingAsync />,
     private: true,
     lazy: true
 }];
