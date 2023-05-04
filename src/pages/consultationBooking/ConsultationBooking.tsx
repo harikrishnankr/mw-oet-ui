@@ -1,9 +1,10 @@
-import { PageWrapper, toggleSpinner } from "./PageWrapper";
 import { Button, Table } from "antd";
-import { useEffect, useMemo, useState } from "react";
-import { postRequest } from "./apiService";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { ColumnsType } from "antd/lib/table";
-import { formatDate } from "./utils";
+import { Filter, FilterType, FilterWrapper } from "../../core/filterWrapper/FilterWrapper";
+import { PageWrapper, toggleSpinner } from "../../core/PageWrapper";
+import { postRequest } from "../../core/apiService";
+import { formatDate } from "../../core/utils";
 
 interface DataType {
     key: React.Key;
@@ -20,12 +21,28 @@ interface DataType {
     countryPreferred: string[];
 }
 
-export function BookingList({ immigration }: { immigration: boolean }) {
+export enum BookingType {
+    STUDY_ABROAD= "STUDY_ABROAD",
+    IMMIGRATION= "IMMIGRATION",
+    VISA_GUIDANCE="VISA_GUIDANCE",
+    ALL= "ALL"
+}
+
+export function ConsultationBooking() {
     const [results, setResults] = useState<DataType[]>([]);
     const [paginationConfig, setPaginationConfig] = useState<any>({
         total: 0,
         pageSize: 10,
-        current: 1
+        current: 1,
+    });
+    const bookingTypeList = useMemo(() => [
+        { label: 'All', value: BookingType.ALL },
+        { label: 'Study Abroad', value: BookingType.STUDY_ABROAD },
+        { label: 'Immigration', value: BookingType.IMMIGRATION },
+        { label: 'Visa Guidance', value: BookingType.VISA_GUIDANCE },
+    ], [])
+    const [filter, setFilter] = useState({
+        type: BookingType.ALL
     });
 
     const columns: ColumnsType<DataType> = useMemo(() => [
@@ -42,6 +59,32 @@ export function BookingList({ immigration }: { immigration: boolean }) {
         { title: 'Country Preferred', dataIndex: 'countryPreferred', key: 'countryPreferred' },
         { title: 'Booking Date', dataIndex: 'createdAt', key: 'createdAt' },
     ], []);
+
+    const getTitle = () => {
+        switch (filter.type) {
+            case BookingType.STUDY_ABROAD:
+                return "Study Abroad Bookings";
+            case BookingType.IMMIGRATION:
+                return "Immigration Bookings";
+            case BookingType.VISA_GUIDANCE:
+                return "Visa Application Guidance Booking";
+            default:
+                return "Consultation Bookings";
+        }
+    };
+
+    const getSubTitle = () => {
+        switch (filter.type) {
+            case BookingType.STUDY_ABROAD:
+                return "Study Abroad Consultation Bookings complete listing";
+            case BookingType.IMMIGRATION:
+                return "Immigration Consultation Bookings complete listing";
+            case BookingType.VISA_GUIDANCE:
+                return "Visa Application Guidance Consultation Bookings complete listing";
+            default:
+                return "Consultation Booking complete list(Study Abroad/Immigration/Visa Application Guidance)"
+        }
+    };
     
     const onPageChange = (pagination: any) => {
         setPaginationConfig((f: any) => ({
@@ -50,17 +93,31 @@ export function BookingList({ immigration }: { immigration: boolean }) {
         }));
     };
 
+    const handleInputChange = useCallback((e: any) => {
+        const { target } = e;
+        if (target) {
+            setFilter((f) => ({
+                ...f,
+                [target.name]: target.value
+            }));
+            setPaginationConfig((c: any) => ({
+                ...c,
+                current: 1
+            }));
+        }
+    }, []);
+
     const getResultListing = () => {
         toggleSpinner(true);
         postRequest({
             url: "/study-abroad/booking/list",
             payload: {
                 page: paginationConfig.current,
-                immigration: immigration,
+                type: filter.type,
                 limit: 10
             }
         })
-        .then((res) => {
+        .then((res: any) => {
             toggleSpinner(false);
             setResults(res.data.docs.map((d: any) => ({
                 ...d,
@@ -76,7 +133,7 @@ export function BookingList({ immigration }: { immigration: boolean }) {
                 total: res.data.totalDocs
             }));
         })
-        .catch((err) => {
+        .catch((err: any) => {
             toggleSpinner(false);
             console.log(err);
         });
@@ -84,16 +141,20 @@ export function BookingList({ immigration }: { immigration: boolean }) {
 
     useEffect(() => {
         getResultListing();
-    }, [paginationConfig.current]);
+    }, [paginationConfig.current, filter.type]);
     
     return (
         <PageWrapper
-            title={!immigration ? "Study Abroad Bookings": "Immigration Bookings"}
-            subTitle={!immigration ? "Study Abroad Bookings complete listing" : "Immigration Bookings complete listing" }
+            title={getTitle()}
+            subTitle={getSubTitle()}
             actions={[
                 <Button key="1" type="primary" onClick={getResultListing}>Refresh</Button>
             ]}
         >
+            <FilterWrapper>
+                <Filter name="type" type={FilterType.RadioGroup} radioOptions={bookingTypeList}
+                    value={filter.type} onChange={handleInputChange} label="Booking Type"/>
+            </FilterWrapper>
             <Table
                 columns={columns}
                 dataSource={results}

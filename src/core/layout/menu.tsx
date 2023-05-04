@@ -15,25 +15,29 @@ import feedbackImage from "../../assets/images/feedback.svg";
 
 export const MenuItems = [{
     icon: <img src={bookingImage} alt="ICON" className="side-menu-icon"/>,
-    label: "Study Abroad Bookings",
+    label: "Consultation Bookings",
     access: [UserType.Admin, UserType.Staff],
-    url: "/app/study-abroad-booking"
-},{
+    url: "/app/consultation-booking"
+},
+{
     icon: <img src={bookingImage} alt="ICON" className="side-menu-icon"/>,
-    label: "Immigration Bookings",
+    label: "Service Requests",
     access: [UserType.Admin, UserType.Staff],
-    url: "/app/immigration-booking"
-}, {
-    icon: <img src={bookingImage} alt="ICON" className="side-menu-icon"/>,
-    label: "IELTS/Spoken Bookings",
-    access: [UserType.Admin],
-    url: "/app/booking"
-}, {
+    url: "/app/service-requests"
+},
+// {
+//     icon: <img src={bookingImage} alt="ICON" className="side-menu-icon"/>,
+//     label: "IELTS/Spoken Bookings",
+//     access: [UserType.Admin],
+//     url: "/app/booking"
+// }, 
+{
     icon: <img src={slotsImage} alt="ICON" className="side-menu-icon"/>,
     label: "Results/Testimonials",
     access: [UserType.Admin],
     url: "/app/result-testimonials"
-}, {
+},
+{
     icon: <img src={coursesImage} alt="ICON" className="side-menu-icon"/>,
     label: "Courses",
     access: [UserType.Admin],

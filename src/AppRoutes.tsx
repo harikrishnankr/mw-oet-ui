@@ -14,8 +14,8 @@ const UpcomingSlotsAsync = lazy(() => import("./pages/slots/UpcomingSlots"));
 const NotificationsAsync = lazy(() => import("./pages/notifications"));
 const VideoPreviewAsync = lazy(() => import("./pages/studyMaterials/VideoPreview"));
 const ResultAndTestimonialsAsync = lazy(() => import("./pages/resultAndTestimonials"));
-const StudyAbroadBookingAsync = lazy(() => import("./pages/studyAbroad"));
-const ImmigrationBookingAsync = lazy(() => import("./pages/Immigrations"));
+const ConsultationBookingAsync = lazy(() => import("./pages/consultationBooking"));
+const ServiceBookingAsync = lazy(() => import("./pages/serviceBooking"));
 
 export const routes = [{
     key: 1,
@@ -115,14 +115,14 @@ export const routes = [{
     lazy: true
 }, {
     key: 17,
-    path: "/app/study-abroad-booking",
-    component: <StudyAbroadBookingAsync />,
+    path: "/app/consultation-booking",
+    component: <ConsultationBookingAsync  />,
     private: true,
     lazy: true
 }, {
     key: 18,
-    path: "/app/immigration-booking",
-    component: <ImmigrationBookingAsync />,
+    path: "/app/service-requests",
+    component: <ServiceBookingAsync />,
     private: true,
     lazy: true
 }];
