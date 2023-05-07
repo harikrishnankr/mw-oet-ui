@@ -122,7 +122,7 @@ export function ConsultationBooking() {
             setResults(res.data.docs.map((d: any) => ({
                 ...d,
                 key: d._id,
-                createdAt: formatDate(d.createdAt),
+                createdAt: d.createdAt ? formatDate(d.createdAt) : "03/05/2023",
                 inPersonAppointment: d.inPersonAppointment ? "Yes" : "No",
                 testAppeared: d.testAppeared ? "Yes" : "No",
                 countryPreferred: d.countryPreferred.join(", ")
