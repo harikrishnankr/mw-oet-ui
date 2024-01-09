@@ -18,3 +18,16 @@ body {
   height: 100%;
   width: 100%;
 }
+
+.ant-descriptions-item-label {
+  font-weight: 600 !important;
+
+}
+
+.ant-descriptions-item-label:after {
+  content: "" !important;
+}
+
+.ant-descriptions-row>th {
+  padding-bottom: 6px !important;
+}

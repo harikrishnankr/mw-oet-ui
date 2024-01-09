@@ -16,6 +16,7 @@ const VideoPreviewAsync = lazy(() => import("./pages/studyMaterials/VideoPreview
 const ResultAndTestimonialsAsync = lazy(() => import("./pages/resultAndTestimonials"));
 const ConsultationBookingAsync = lazy(() => import("./pages/consultationBooking"));
 const ServiceBookingAsync = lazy(() => import("./pages/serviceBooking"));
+const EventsAsync = lazy(() => import("./pages/events"));
 
 export const routes = [{
     key: 1,
@@ -123,6 +124,12 @@ export const routes = [{
     key: 18,
     path: "/app/service-requests",
     component: <ServiceBookingAsync />,
+    private: true,
+    lazy: true
+}, {
+    key: 19,
+    path: "/app/events",
+    component: <EventsAsync />,
     private: true,
     lazy: true
 }];

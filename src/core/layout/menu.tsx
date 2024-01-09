@@ -3,7 +3,6 @@ import bookingImage from "../../assets/images/booking.svg";
 import coursesImage from "../../assets/images/courses.svg";
 import studentsImage from "../../assets/images/students.svg";
 import staffImage from "../../assets/images/staff.svg";
-import studyMaterialsImage from "../../assets/images/studyMaterials.svg";
 import slotsImage from "../../assets/images/slots.svg";
 import leavesImage from "../../assets/images/leaves.svg";
 import notificationsImage from "../../assets/images/notifications.svg";
@@ -25,12 +24,12 @@ export const MenuItems = [{
     access: [UserType.Admin, UserType.Staff],
     url: "/app/service-requests"
 },
-// {
-//     icon: <img src={bookingImage} alt="ICON" className="side-menu-icon"/>,
-//     label: "IELTS/Spoken Bookings",
-//     access: [UserType.Admin],
-//     url: "/app/booking"
-// }, 
+{
+    icon: <img src={slotsImage} alt="ICON" className="side-menu-icon"/>,
+    label: "Events",
+    access: [UserType.Admin],
+    url: "/app/events"
+}, 
 {
     icon: <img src={slotsImage} alt="ICON" className="side-menu-icon"/>,
     label: "Results/Testimonials",
@@ -52,11 +51,6 @@ export const MenuItems = [{
     label: "Staff",
     access: [UserType.Admin],
     url: "/app/staff"
-}, {
-    icon: <img src={studyMaterialsImage} alt="ICON" className="side-menu-icon"/>,
-    label: "Study Materials",
-    access: [UserType.Admin],
-    url: "/app/study-materials"
 }, {
     icon: <img src={leavesImage} alt="ICON" className="side-menu-icon"/>,
     label: "Leaves",
