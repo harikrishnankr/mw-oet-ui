@@ -17,6 +17,8 @@ const ResultAndTestimonialsAsync = lazy(() => import("./pages/resultAndTestimoni
 const ConsultationBookingAsync = lazy(() => import("./pages/consultationBooking"));
 const ServiceBookingAsync = lazy(() => import("./pages/serviceBooking"));
 const EventsAsync = lazy(() => import("./pages/events"));
+const StudyMaterialLeadsAsync = lazy(() => import("./pages/studyMaterialLeads"));
+
 
 export const routes = [{
     key: 1,
@@ -130,6 +132,12 @@ export const routes = [{
     key: 19,
     path: "/app/events",
     component: <EventsAsync />,
+    private: true,
+    lazy: true
+}, {
+    key: 20,
+    path: "/app/studyMaterialLeads",
+    component: <StudyMaterialLeadsAsync />,
     private: true,
     lazy: true
 }];

@@ -87,7 +87,7 @@ export function EventBookingList() {
         })
         .then((res) => {
             toggleSpinner(false);
-            setBookingList(res.data.docs.map((d: any) => ({ ...d, key: d._id,  createdDate: formatDate(d.createdDate) })));
+            setBookingList(res.data.docs.map((d: any) => ({ ...d, key: d._id,  createdDate: formatDate(d.createdAt) })));
             setPaginationConfig((c: any) => ({
                 current: paginationConfig.current,
                 pageSize: 10,

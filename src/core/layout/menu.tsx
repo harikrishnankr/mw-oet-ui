@@ -29,6 +29,12 @@ export const MenuItems = [{
     label: "Events",
     access: [UserType.Admin],
     url: "/app/events"
+},
+{
+    icon: <img src={slotsImage} alt="ICON" className="side-menu-icon"/>,
+    label: "Study Material Leads",
+    access: [UserType.Admin],
+    url: "/app/studyMaterialLeads"
 }, 
 {
     icon: <img src={slotsImage} alt="ICON" className="side-menu-icon"/>,
