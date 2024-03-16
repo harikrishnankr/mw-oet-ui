@@ -63,6 +63,9 @@ export function ServiceBooking() {
         { title: 'Mobile', dataIndex: 'mobile', key: 'mobile' },
         { title: 'Email', dataIndex: 'email', key: 'email' },
         {
+            title: 'Study Abroad Or Immigrate', dataIndex: 'studyAbroadOrImmigrate', key: 'studyAbroadOrImmigrate'
+        },
+        {
             title: 'Country Preferred', dataIndex: 'countryPreferred', key: 'countryPreferred'
         },
         { title: 'Created Date', dataIndex: 'createdAt', key: 'createdAt' },
