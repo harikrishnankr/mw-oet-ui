@@ -60,13 +60,18 @@ export function ServiceBooking() {
     const columns: ColumnsType<DataType> = useMemo(() => [
         { title: 'Full Name', dataIndex: 'fullName', key: 'fullName', fixed: 'left', },
         { title: 'WhatsApp No.', dataIndex: 'whatsAppNo', key: 'whatsAppNo', fixed: 'left', },
-        { title: 'Mobile', dataIndex: 'mobile', key: 'mobile' },
         { title: 'Email', dataIndex: 'email', key: 'email' },
         {
             title: 'Study Abroad Or Immigrate', dataIndex: 'studyAbroadOrImmigrate', key: 'studyAbroadOrImmigrate'
         },
         {
             title: 'Country Preferred', dataIndex: 'countryPreferred', key: 'countryPreferred'
+        },
+        {
+            title: 'Processing Started', dataIndex: 'hasProcessStarted', key: 'hasProcessStarted'
+        },
+        {
+            title: 'Offer LEtter Received', dataIndex: 'offerLetterReceived', key: 'offerLetterReceived'
         },
         { title: 'Created Date', dataIndex: 'createdAt', key: 'createdAt' },
         {
