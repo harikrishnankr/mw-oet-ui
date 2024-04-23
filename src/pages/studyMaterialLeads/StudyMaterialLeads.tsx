@@ -19,6 +19,7 @@ interface DataType {
     test: string;
     howDidYouKnow: string;
     countryPreferred: string[];
+    currentResidence: string;
 }
 
 export function ServiceBooking() {
@@ -62,6 +63,9 @@ export function ServiceBooking() {
         { title: 'WhatsApp No.', dataIndex: 'whatsAppNo', key: 'whatsAppNo', fixed: 'left', },
         { title: 'Email', dataIndex: 'email', key: 'email' },
         {
+            title: 'Current Residence', dataIndex: 'currentResidence', key: 'currentResidence'
+        },
+        {
             title: 'Study Abroad Or Immigrate', dataIndex: 'studyAbroadOrImmigrate', key: 'studyAbroadOrImmigrate'
         },
         {
@@ -71,7 +75,7 @@ export function ServiceBooking() {
             title: 'Processing Started', dataIndex: 'hasProcessStarted', key: 'hasProcessStarted'
         },
         {
-            title: 'Offer LEtter Received', dataIndex: 'offerLetterReceived', key: 'offerLetterReceived'
+            title: 'Offer Letter Received', dataIndex: 'offerLetterReceived', key: 'offerLetterReceived'
         },
         { title: 'Created Date', dataIndex: 'createdAt', key: 'createdAt' },
         {
